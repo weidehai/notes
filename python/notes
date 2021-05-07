@@ -1,0 +1,3 @@
+python 查看导包路径
+import sys
+sys.path

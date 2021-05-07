@@ -1,0 +1,5 @@
+apt-get update就是访问服务器，更新可获取软件及其版本信息，但仅仅给出一个可更新的list
+具体更新需要通过apt-get upgrade，apt-get upgrade可将软件进行更新
+
+The APT package index is essentially a database of available packages from the repositories defined in the /etc/apt/sources.list file and
+in the /etc/apt/sources.list.d directory. To update the local package index with the latest changes made in the repositories

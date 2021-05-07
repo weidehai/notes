@@ -1,0 +1,227 @@
+
+
+
+
+
+
+
+
+
+
+一. 直接创建Object实例
+方式一：
+
+var person = new Object();
+person.name = 'zzx';
+person.age = 20;
+person.job = 'Programmer';
+
+person.sayName = function(){
+    console.log(this.name);
+};
+方式二：
+
+var person = {
+    name: 'zzx';
+    age: 20;
+    job: 'Programmer';
+
+    sayName: function(){
+        console.log(this.name);
+    }
+}
+这种方式的缺点显而易见，每次创建一个对象就需要手动设置它的每一个属性，造成大量代码重复，JS可以使用工厂模式的变体解决这个问题
+
+二. 工厂模式
+function createPerson(name, age, job){
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName = function(){
+        console.log(this.name);
+    };
+    return o;
+}
+
+var person1 = createPerson('zzx', 22, 'Programmer');
+var person2 = createPerson('yzy', 20, 'Teacher');
+
+console.log(person1);
+//{ name: 'zzx', age: 20, job: 'Programmer', sayName: [Function] }
+这种模式解决了创建多个相似对象的问题，但是却不知道当前创建的对象是什么类型，即是Person还是Robot不能判断出来
+
+三. 构造函数模式
+function Person(name, age, job){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = function(){
+        console.log(this.name);
+    };
+}
+
+function Robot(name, age){
+    this.name = name;
+    this.age = age;
+}
+
+var person1 = new Person('zzx', 22, 'Programmer');
+var person2 = new Person('yzy', 20, 'Teacher');
+
+console.log(person1 instanceof Person); //true
+console.log(person2 instanceof Robot); //false
+构造函数名开头大写借鉴了其他面向对象语言，是为了区别普通函数。任何一个函数不通过new操作符调用，就是一个普通函数：
+
+function Person(name, age, job){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = function(){
+        console.log(this.name);
+    };
+}
+
+Person('zzx', 22, 'Programmer');
+sayName(); //zzx
+构造函数仍然存在缺点，就是其中的每个方法例如sayName()，在每次实例化时都会自动重新创建一遍，产生不同的作用域链，因此即使是同名函数也是不相等的，下面利用上述代码创建两个实例：
+
+var person1 = new Person('zzx', 22, 'Programmer');
+var person2 = new Person('yzy', 20, 'Teacher');
+
+console.log(person1.sayName == person2.sayName); //flase
+四. 原型模式
+使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。
+
+function Person(){
+}
+
+Person.prototype.name = 'zzx';
+Person.prototype.age = 22;
+Person.prototype.job = 'Programmer';
+Person.prototype.sayName = function(){
+    console.log(this.name);
+}
+
+var person1 = new Person();
+person1.sayName(); //zzx
+var person2 = new Person();
+console.log(person1.sayName == person2.sayName); //true
+这里将sayName()方法和所有的属性直接添加到了Person 的prototype属性中，构造函数就成了空函数，但是也能调用构造函数创建新对象。新队先后的属性和方法是所有实例共享的，person1和person2访问的都是同一组属性和同一个sayName()函数。
+
+要理解原型模式工作原理，先要理解原型对象。
+
+[原型对象]https://www.jianshu.com/p/b958bfd92a41
+
+上述方式每添加一个属性和方法都要输入Person.prototype，因此还有更简单的方式是以对象字面量形式创建：
+
+function Person(){
+}
+
+Person.prototype = {
+    name: 'zzx',
+    age: '22',
+    job: 'Programmer',
+    sayName: function(){
+        console.log(this.name);
+    }
+};
+
+var person1 = new Person();
+console.log(person1 instanceof Person); //true
+console.log(person1.constrcutor == Person); //false
+但这里使用的语法本质上完全重写了默认的prototype对象（原型对象），因此本来会自动获得的constructor属性变成了新对象的constructor属性（指向Object构造函数），不再指向Person函数，此时instanceof能返回正确的结果，但是constructor已经无法确定对象类型了
+
+如果constructor值真的很重要，可以通过下面这样特意将它设置回适当的值
+
+function Person(){
+}
+
+Person.prototype = {
+    constructor: Person,
+    name: 'zzx',
+    age: '22',
+    job: 'Programmer',
+    sayName: function(){
+        console.log(this.name);
+    }
+};
+原型模式也有缺点，当其中包含引用类型值属性时会出现问题：
+
+function Person(){
+}
+
+Person.prototype = {
+    constructor: Person,
+    name: 'zzx',
+    age: '22',
+    job: 'Programmer',
+    friends: ['wc', 'rt'],
+    sayName: function(){
+        console.log(this.name);
+    }
+};
+
+var person1 = new Person();
+var person2 = new Person();
+
+person1.friends.push('lol');
+console.log(person1.friends); //[ 'wc', 'rt', 'lol' ]
+console.log(person2.friends); //[ 'wc', 'rt', 'lol' ]
+由于数组存在于Person.prototype中，当向数组中添加了一个字符串时，所有的实例都会共享这个数组（基本值可以被实例屏蔽）
+
+五. 组合使用构造函数模式和原型模式
+创建自定义类型的常见方式，就是组合使用构造函数模式与原型模式。构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。
+
+function Person(name, age, job){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.friends = ['wc', 'rt'];
+}
+
+Person.prototype = {
+    constructor: Person,
+    sayName: function(){
+        console.log(this.name);
+    }
+};
+六. 动态原型模式
+这里只在 sayName()方法不存在的情况下，才会将它添加到原型中。
+
+function Person(name, age, job){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+
+    if(typeof this.sayName != "function"){
+        Person.prototype.sayName = function(){
+            console.log(this.name);
+        };
+    }
+}
+
+var person1 = new Person('zzx', 22, 'Programmer');
+person1.sayName();
+七. 寄生构造函数模式
+这种模式的基本思想是创建一个函数，该函数的作用仅仅是封装创建对象的代码，然后再返回新创建的对象；但从表面上看，这个函数又很像是典型的构造函数。
+
+function Person(name, age, job){
+    var o = new Object()
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName = function(){
+        console.log(this.name);
+    }
+    return o;
+}
+
+var person1 = new Person('zzx', 22, 'Programmer');
+person1.sayName();
+这个例子中，除了使用 new 操作符并把使用的包装函数叫做构造函数之外，这个模式跟工厂模式其实是一模一样的。
+
+作者：zzxprint
+链接：https://www.jianshu.com/p/358501f811f9
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

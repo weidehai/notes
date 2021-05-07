@@ -1,0 +1,23 @@
+ {
+            var handler = {
+                has (target,key) {
+                    if(key[0] === "_") {
+                        return false;
+                    }
+                    return key in target;
+                }
+            };
+            var target = {_prop:'foo',prop:'foo'};
+            var proxy = new Proxy(target,handler);
+            console.log("_prop" in proxy);
+            console.log("prop" in proxy);
+        }
+        //上面代码中，如果原对象的属性名的第一个字符是下划线，proxy.has就会返回false，从而不会被in运算符发现。
+        //注意，如果原对象不可配置或者禁止扩展，这时has拦截会报错。
+
+
+let p = new Proxy(target, handler);
+
+handler：get set has。。。。
+当在traget上执行对应的操作，就会触发这些handler
+具体有哪些handlre参考https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy

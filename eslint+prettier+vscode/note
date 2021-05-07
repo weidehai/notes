@@ -1,0 +1,299 @@
+我的eslint配置
+module.exports = {
+  root: true,
+  env: {
+    node: true,
+    browser: true
+  },
+  extends: [
+    'plugin:vue/essential',
+    '@vue/standard'
+  ],
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'eqeqeq': ['warn', 'always'] //如果是别人的项目，这个就警告，自己的就error
+  }
+}
+eslint不能检查html嵌入的js代码
+
+vscdoe+eslint
+"eslint.validate": [
+        "javascript",
+        "typescript",
+        "vue"
+    ]
+eslint默认只会检查js文件
+{
+    "eslint.autoFixOnSave": true,
+    "eslint.enable": true,
+    "eslint.options": {
+       "extensions": [".js", ".vue", ".jsx"]
+    },
+    "eslint.validate": [
+        {
+          "language": "vue",
+          "autoFix": true
+        },
+        {
+          "language": "javascript",
+          "autoFix": true
+        },
+        {
+          "language": "javascriptreact",
+          "autoFix": true
+        }
+    ],
+}
+
+
+我的prettier配置
+"prettier":{
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "printWidth:":80,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "arrowParens": "avoid"
+  },
+
+vscode + prettier
+{
+    "[javascript]": {
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[typescript]": {
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[javascript|react]": {
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[typescript|react]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[less]": {
+         "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+     "[css]": {
+         "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+     "[json]": {
+	 "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+     "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+     }
+}
+
+
+
+
+vscode所有配置
+{
+    "files.associations": {
+        "*.cjson": "jsonc",
+        "*.wxss": "css",
+        "*.wxs": "javascript",
+	"*.vue": "html"
+    },
+    "emmet.includeLanguages": {
+        "wxml": "html"
+    },
+    "minapp-vscode.disableAutoConfig": true,
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+    "eslint.validate": [
+        "javascript",
+        "typescript",
+        "vue"
+    ],
+    "[javascript]": {
+	    "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[typescript]": {
+	    "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[javascript|react]": {
+	    "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[typescript|react]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+    "[less]": {
+         "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+     "[css]": {
+         "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+     "[json]": {
+	    "editor.defaultFormatter": "esbenp.prettier-vscode"
+     },
+     "[vue]": {
+	    "editor.defaultFormatter": "esbenp.prettier-vscode"
+     }
+}
+
+
+editorconfig
+[*.{js,jsx,ts,tsx,vue}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 100
+
+
+
+
+vscode常用的snippet
+"create html template":{
+		"prefix": "chtml",
+		"body": [
+			"<!DOCTYPE html>",
+			"<html>",
+			"<head>",
+			"  <meta charset='utf-8'>",
+			"  <meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'>",
+			"  <title>$1</title>",
+			"  <link rel='stylesheet' type='text/css' href='$2'>",
+			"  <script type='text/javascript' src='$3'></script>",
+			"  <link rel='icon' type='image/x-icon' href='$4'>",
+			"</head>",
+			"<body>",
+			"  $5",
+			"</body>",
+			"</html>",
+		]
+	}
+
+
+
+
+	"create vue-ts template":{
+    		"prefix": "vue-ts",
+    		"body": [
+    			"<template>",
+    			"  <div id='$1'></div>",
+    			"</template>",
+    			"",
+    			"<script lang='$2'>",
+    			"import { Component, Vue } from 'vue-property-decorator';",
+    			"@Component",
+    			"export default class $3 extends Vue {}",
+    			"</script>",
+    			"",
+    			"<style lang='$4' scoped>",
+    			"</style>"
+    		]
+    	},
+    	"create vue template":{
+    		"prefix": "vue",
+    		"body": [
+    			"<template>",
+    			"  <div id='$1'></div>",
+    			"</template>",
+    			"",
+    			"<script>",
+    			"export default {}",
+    			"</script>",
+    			"",
+    			"<style lang='$4' scoped>",
+    			"</style>"
+    		]
+    	}
+	
+	
+	"create vuex-model template":{
+		"prefix": "vuex-model",
+		"body": [
+			"const state = {",
+			"  $1",
+			"}",
+			"",
+			"const mutations = {",
+			"  $2",
+			"}",
+			"",
+			"const actions = {",
+			"  $3",
+			"}",
+			"",
+			"const getter = {",
+			"  $4",
+			"}",
+			"",
+			"export default {",
+			"  state,",
+			"  mutations,",
+			"  actions,",
+			"  getter,",
+			"}"
+		]
+	}
+	
+	
+	
+	
+	"create vuex template":{
+		"prefix": "vuex",
+		"body": [
+			"import Vue from 'vue'",
+			"import Vuex from 'vuex'",
+			"Vue.use(Vuex)",
+			"",
+			"const store = new Vuex.Store({",
+			"  state: {",
+			"    $1",
+			"  },",
+			"",
+			"  mutations: {",
+			"    $2",
+			"  },",
+			"",
+			"  actions: {",
+			"    $3",
+			"  },",
+			"",
+			"  getter: {",
+			"    $4",
+			"  }",
+			"})",
+			"",
+			"export default store"
+		]
+	}
+
+
+"eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true,
+      "browser":true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/airbnb",
+      "@vue/typescript/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
+  },

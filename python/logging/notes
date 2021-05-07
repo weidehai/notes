@@ -1,0 +1,93 @@
+Logging.Formatter：这个类配置了日志的格式，在里面自定义设置日期和时间，输出日志的时候将会按照设置的格式显示内容。
+Logging.Logger：Logger是Logging模块的主体，进行以下三项工作：
+1. 为程序提供记录日志的接口
+2. 判断日志所处级别，并判断是否要过滤
+3. 根据其日志级别将该条日志分发给不同handler
+常用函数有：
+Logger.setLevel() 设置日志级别
+Logger.addHandler() 和 Logger.removeHandler() 添加和删除一个Handler
+Logger.addFilter() 添加一个Filter,过滤作用
+Logging.Handler：Handler基于日志级别对日志进行分发，如设置为WARNING级别的Handler只会处理WARNING及以上级别的日志。
+
+'''
+# 第一步，创建一个logger
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)  # Log等级总开关
+
+# 第二步，创建一个handler，用于写入日志文件
+rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
+log_path = os.path.dirname(os.getcwd()) + '/Logs/'
+log_name = log_path + rq + '.log'
+logfile = log_name
+fh = logging.FileHandler(logfile, mode='w')
+fh.setLevel(logging.DEBUG)  # 输出到file的log等级的开关
+
+# 第三步，定义handler的输出格式
+formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+fh.setFormatter(formatter)
+
+# 第四步，将logger添加到handler里面
+logger.addHandler(fh)
+
+# 日志
+logger.debug('this is a logger debug message')
+logger.info('this is a logger info message')
+'''
+
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(filename)s[%(funcName)s:line:%(lineno)d] %(process)d:%(thread)d:%(threadName)s- %(levelname)s: %(message)s')
+
+format常用格式说明
+%(levelno)s: 打印日志级别的数值
+%(levelname)s: 打印日志级别名称
+%(pathname)s: 打印当前执行程序的路径，其实就是sys.argv[0]
+%(filename)s: 打印当前执行程序名
+%(funcName)s: 打印日志的当前函数
+%(lineno)d: 打印日志的当前行号
+%(asctime)s: 打印日志的时间
+%(thread)d: 打印线程ID
+%(threadName)s: 打印线程名称
+%(process)d: 打印进程ID
+%(message)s: 打印日志信息
+
+
+logging 模块提供的 Handler 有：
+
+StreamHandler：logging.StreamHandler；日志输出到流，可以是 sys.stderr，sys.stdout 或者文件。
+FileHandler：logging.FileHandler；日志输出到文件。
+BaseRotatingHandler：logging.handlers.BaseRotatingHandler；基本的日志回滚方式。
+RotatingHandler：logging.handlers.RotatingHandler；日志回滚方式，支持日志文件最大数量和日志文件回滚。
+TimeRotatingHandler：logging.handlers.TimeRotatingHandler；日志回滚方式，在一定时间区域内回滚日志文件。
+SocketHandler：logging.handlers.SocketHandler；远程输出日志到 TCP/IP sockets。
+DatagramHandler：logging.handlers.DatagramHandler；远程输出日志到 UDP sockets。
+SMTPHandler：logging.handlers.SMTPHandler；远程输出日志到邮件地址。
+SysLogHandler：logging.handlers.SysLogHandler；日志输出到 syslog。
+NTEventLogHandler：logging.handlers.NTEventLogHandler；远程输出日志到 Windows NT/2000/XP 的事件日志。
+MemoryHandler：logging.handlers.MemoryHandler；日志输出到内存中的指定 buffer。
+HTTPHandler：logging.handlers.HTTPHandler；通过”GET” 或者”POST” 远程输出到 HTTP 服务器。
+
+
+basicConfig 的参数都有：
+
+filename：即日志输出的文件名，如果指定了这个信息之后，实际上会启用 FileHandler，而不再是 StreamHandler，这样日志信息便会输出到文件中了。
+filemode：这个是指定日志文件的写入方式，有两种形式，一种是 w，一种是 a，分别代表清除后写入和追加写入。
+format：指定日志信息的输出格式，即上文示例所示的参数，详细参数可以参考：docs.python.org/3/library/l…，部分参数如下所示：
+%(levelno) s：打印日志级别的数值。
+%(levelname) s：打印日志级别的名称。
+%(pathname) s：打印当前执行程序的路径，其实就是 sys.argv [0]。
+%(filename) s：打印当前执行程序名。
+%(funcName) s：打印日志的当前函数。
+%(lineno) d：打印日志的当前行号。
+%(asctime) s：打印日志的时间。
+%(thread) d：打印线程 ID。
+%(threadName) s：打印线程名称。
+%(process) d：打印进程 ID。
+%(processName) s：打印线程名称。
+%(module) s：打印模块名称。
+%(message) s：打印日志信息。
+datefmt：指定时间的输出格式。
+style：如果 format 参数指定了，这个参数就可以指定格式化时的占位符风格，如 %、{、$ 等。
+level：指定日志输出的类别，程序会输出大于等于此级别的信息。
+stream：在没有指定 filename 的时候会默认使用 StreamHandler，这时 stream 可以指定初始化的文件流。
+handlers：可以指定日志处理时所使用的 Handlers，必须是可迭代的。

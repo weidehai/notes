@@ -1,0 +1,4 @@
+wget命令官网下载源码压缩包
+python.org/downloads/release/python-386/
+阅读readme文件
+configure配置编译选项，比如设置perfix

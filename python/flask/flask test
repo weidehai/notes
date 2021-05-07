@@ -1,0 +1,26 @@
+使用pytest框架测试
+
+pytest will run all files of the form test_*.py or *_test.py in the current directory and its subdirectories
+Execute the test function with “quiet” reporting mode:pytest -q test_sysexit.py
+Conventions for Python test discovery
+1.If no arguments are specified then collection starts from testpaths (if configured) or the current directory. Alternatively, command line arguments can be used in any combination of directories, file names or node ids.
+2.Recurse into directories, unless they match norecursedirs.
+3.In those directories, search for test_*.py or *_test.py files, imported by their test package name.
+4.From those files, collect test items:
+    test prefixed test functions or methods outside of class
+    test prefixed test functions or methods inside Test prefixed test classes (without an __init__ method)
+simple example
+'''
+def func(x):
+    return x + 1
+
+def test_answer():
+    assert func(3) == 5
+
+pytest
+'''
+
+
+使用app.test_client模拟真实请求测试
+client.get()
+client.post()

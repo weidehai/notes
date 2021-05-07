@@ -1,0 +1,55 @@
+1.小程序的原生组件
+view
+scroll-view
+button
+input
+from
+text.....
+相当于html标签
+
+2.小程序的动画
+
+
+
+3.小程序的自定义组件
+
+
+4.小程序的转跳
+原生组件navigator，类似a标签
+
+
+5.组件传参（与vue类似），页面传参（url的形式）
+
+
+6.基础能力，开放能力，扩展能力
+就是微信应用提供给小程序的接口，类似浏览器的内置对象
+
+
+小程序的生命周期（包括app的生命周期和page的生命周期），与vue的生命周期对比
+onlaunch onshow onhide
+onload，onshow，onready，onhide，onunload
+
+
+wx:if
+hidden
+wx:if 在隐藏的时候不渲染，而 hidden 在隐藏时仍然渲染，只是不呈现。
+v-show
+v-if
+v-if是动态的向DOM树内添加或者删除DOM元素；
+v-show是通过设置DOM元素的display样式属性控制显隐；
+
+######版本库的兼容
+
+
+
+vscode开发小程序配置
+"files.associations": {
+        "*.cjson": "jsonc",
+        "*.wxss": "css",
+        "*.wxs": "javascript"
+    },
+    "emmet.includeLanguages": {
+        "wxml": "html"
+    },
+    "minapp-vscode.disableAutoConfig": true,
+

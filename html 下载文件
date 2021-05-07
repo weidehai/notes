@@ -1,0 +1,24 @@
+下载文件有两个方法：
+1.前端需要自己设置
+a标签有一个download属性，加上这个属性，点击a标签就会下载url的内容，文件名就是download属性的值
+
+http 协议之Content-Disposition属性
+Content-Disposition 属性是作为对下载文件的一个标识字段
+
+disposition := "Content-Disposition" ":"
+               disposition-type
+               *(";" disposition-parm)
+disposition-type := "inline"
+                  / "attachment"
+                  / extension-token
+                  ; values are not case-sensitive
+disposition-parm := filename-parm / parameter
+filename-parm := "filename" "=" value;
+Content-Disposition属性有两种类型：inline 和 attachment inline ：将文件内容直接显示在页面 attachment：弹出对话框让用户下载具体例子：
+
+Content-Type: image/jpeg
+Content-Disposition: inline;filename=hello.jpg
+Content-Description: just a small picture of me
+
+
+2.后端返回的时候disposition-type设置为attachment就会自动下载

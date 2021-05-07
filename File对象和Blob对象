@@ -1,0 +1,36 @@
+Blob：大型二进制对象
+Blob 对象表示一个不可变、原始数据的类文件对象。它的数据可以按文本或二进制的格式进行读取，也可以转换成 ReadableStream 来用于数据操作。
+要从其他非blob对象和数据构造一个 Blob，请使用 Blob() 构造函数
+Blob() 构造函数允许通过其它对象创建 Blob 对象（可以将其他对象转化为blob二进制对象）。比如，用字符串构建一个 blob：
+
+var debug = {hello: "world"};
+var blob = new Blob([JSON.stringify(debug, null, 2)], {type : 'application/json'});
+
+
+File顾名思意就是“文件”，通常而言，表示我们使用file控件(<input type="file">)选择的FileList对象，或者是使用拖拽操作搞出的DataTransfer对象。
+
+
+通过FileReader方法实现图片预览是一个比较常见的方式，在H5中还有一种方式可以实现图片预览，那就是利用URL对象createObjectURL()得到File文件的数据的url引用。
+
+前端的文件，图片等数据可以用dataurl来引用指向
+
+
+data URL语法
+data URL由哪四部分组成？
+data:[<mediatype>][;base64],<data>
+组成	含义
+data:	前缀
+[<mediatype>]	MIME type 代表数据的类型
+[;base64]	可选的base64标识
+<data>	数据本身
+
+
+createObjectURL和readAsDataURL的区别
+https://blog.csdn.net/qq_39258552/article/details/84133770
+
+通过FileReader.readAsDataURL(file)可以获取一段data:base64的字符串
+通过URL.createObjectURL(blob)可以获取当前文件的一个内存URL
+
+
+文件切片
+File继承于Blob,可以使用slice切割文件

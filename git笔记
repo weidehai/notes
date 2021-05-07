@@ -1,0 +1,137 @@
+windows中的换行符为 CRLF， 而在linux下的换行符为LF，所以在执行add . 时出现提示，解决办法：
+
+git config --global core.autocrlf false
+
+@强制推送
+git push -f "仓库地址" 分支
+
+@查看已经连接到的远程仓库信息
+git remote -v
+
+@添加远程仓库（可以添加多个）
+git remote add alias remote_address
+@删除远程仓库
+git remote rm origin
+
+@git生成ssl密钥
+ssh-keygen -t rsa
+
+@删除远程分支
+git push remote_repositories --delete dependabot/npm_and_yarn/websocket-extensions-0.1.4
+remote_branch
+
+@创建和切换分支
+git branch local_branchname
+checkout local_branchname
+
+@创建远程分支（就是在将本地的分支推到远程）
+git push remote_repositories branch_name
+
+@切换到远程分支
+git checkout -b 本地分支名称 origin/远程分支名
+git checkout remote_branch
+
+@删除本地分支
+git branch -D master
+
+@查看远程分支
+git branch -a
+
+@撤销本地commit（从版本库中撤销）
+git reset HEAD~
+
+@撤销本地add（从暂存区撤销）
+git reset HEAD
+
+@查看本地分支和远程分支的关系
+git branch -vv
+@本地分支和远程分支建立联系
+git branch --set-upstream-to=origin/<master> master
+
+gitignore不生效：
+清除一下缓存，重新跟踪文件
+删除暂存区的文件
+git rm -r --cached .
+
+@修改分支名
+git branch -m 原名 新名
+
+@查看配置
+git config --global -l
+git config --system -l
+git config --local -l
+
+
+为git配置代理:
+git config --global http.proxy "localhost:代理端口号"
+git config --global https.proxy "localhost:代理端口号"
+查询是否使用代理：
+git config --global http.proxy
+git config --global https.proxy
+取消代理：
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+
+@查看暂存区的内容
+git ls-files [-m,....]
+参数说明（括号里是简写）
+--cached(-c)显示暂存区中的文件，git ls-files命令默认的参数
+--deleted(-d)显示删除的文件
+--modified(-m) 显示修改过的文件
+--other(-o)显示没有被git跟踪的文件
+--stage(-s) 显示mode以及文件对应的Blob对象，进而我们可以获取暂存区中对应文件里面的内容。
+
+@git清除暂存区的内容
+1.
+使用--cached参数：
+前面的rm和git rm都会将工作区的文件删除，如果仅仅想让文件脱离Git的跟踪，可以后面加--cached。
+这样工作区的文件不会删除，仅删除暂存区中对应的文件。
+代码如下：
+git rm readme.txt --cached
+2.
+git reset HEAD（整体清除）
+git reset HEAD filename（单个文件清除）
+
+@设置中文
+git config --global core.quotepath false
+
+@git fetch后比较差异
+git log -p branchname..origin/branchname
+
+@git国内镜像代理
+git clone https://gitclone.com/github.com/weidehai/myblog_dev
+
+git删除commit
+git reset --soft xxxx
+git add .
+git commit
+git push -f
+
+获取当前分支
+git name-rev --name-only HEAD
+
+https免密登录
+https://xxxxx:xxxxx@github.com/weidehai/git-test.git
+
+
+git config --local user.name weidehai
+git config --local user.email 243395655@qq.com
+
+
+修改本地分支名
+git branch -m oldBranchName newBranchName
+
+
+git log --oneline --graph --decorate --all
+
+--oneline 	日志单行显示
+--graph		分支图显示
+--decorate 	可显示分支名称
+--all		显示所有分支
+
+
+
+git 合并的三种情况
+rebase   合并后，不会有分支合并信息
+merge  合并后，有分支合并信息
+fast forward 合并后，不会有分支合并信息

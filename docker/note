@@ -1,0 +1,44 @@
+容器和镜像的理解
+https://blog.csdn.net/fanbaodan/article/details/99681696
+
+commit提交一个镜像到本地仓库，以便复用
+docker commit -a "" -m "this is test" 容器id 名称:版本号
+-a :提交的镜像作者；
+-c :使用Dockerfile指令来创建镜像；
+-m :提交时的说明文字；
+-p :在commit时，将容器暂停。
+
+容器提交到dockerhub
+docker push [OPTIONS] NAME[:TAG]
+
+docker login 登录到docker hub
+
+docker start 运行容器
+docker exec -i -t 4f5 bash 进入容器bash
+docker ps 查看容器信息
+docker ps -a
+docker images 查看镜像
+
+
+镜像创建容器
+docker run -p 本机映射端口:镜像映射端口 -d  --name 启动镜像名称 -e 镜像启动参数  镜像名称:镜像版本号
+docker run -p 3306:3306 -d --name woneblog_dev_sql woneblog_dev_mysql:v1.0
+
+命令行方式进入容器
+不存在的容器
+docker run -i -t xxxxx /bin/bash
+已存在的容器
+docker exec -i -t xxxxx /bin/bash
+
+容器中安装软件
+apt-get update
+apt-get install procps
+
+从容器里面拷文件到宿主机
+docker cp 容器名:要拷贝的文件在容器里面的路径 要拷贝到宿主机的相应路径
+从宿主机拷文件到容器里面
+docker cp 要拷贝的文件路径 容器名:要拷贝到容器里面对应的路径
+
+
+
+  

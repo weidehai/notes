@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            border: 1px red solid;
+            height: 500px;
+            width: 500px;
+            overflow-y: scroll;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <script>
+        /*
+        ***js函数防抖和节流
+         */
+        const {log} = console
+        //1.防抖
+        function antishake(fn,wait) {
+            let timer = null;
+            return function () {
+                if(timer!==null) clearTimeout(timer);
+                timer = setTimeout(fn.bind(this),wait)
+            }
+        }
+        function handle() {
+            log(this.scrollTop);
+        }
+        //let div = document.md.querySelector('div');
+        //div.addEventListener('scroll',antishake(handle,1000));
+        //2.节流
+        function throttle(fn,delay){
+            let pre = Date.now();
+            return function () {
+                let now = Date.now();
+                if(now-pre>=delay){
+                    fn.call(this);
+                    pre = Date.now();
+                }
+            }
+        }
+        let div = document.querySelector('div');
+        div.addEventListener('scroll',throttle(handle,5000))
+    </script>
+</body>
+</html>

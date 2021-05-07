@@ -1,0 +1,13 @@
+Changing boot configuration
+By default, your Jenkins runs at https://localhost:8080/. This can be changed by editing jenkins.xml , which is located
+in your installation directory. This file is also the place to change other boot configuration parameters, such as JVM
+options, HTTPS setup, etc.
+
+Starting/stopping the service
+Jenkins is installed as a Windows service, and it is configured to start automatically upon boot. To start/stop them
+manually, use the service manager from the control panel, or the sc command line tool.
+
+Inheriting your existing Jenkins installation
+If you'd like your new installation to take over your existing Jenkins data, copy your old data directory into the
+new JENKINS_HOME directory.
+

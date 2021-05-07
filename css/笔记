@@ -1,0 +1,40 @@
+强制换行
+      1、word-break: break-all;       只对英文起作用，以字母作为换行依据。
+      2、word-wrap: break-word;   只对英文起作用，以单词作为换行依据。
+      3、white-space: pre-wrap;     只对中文起作用，强制换行。
+
+禁止换行
+      white-space:nowrap; overflow:hidden;
+溢出用省略号表示
+text-overflow:ellipsis;
+
+box-shadow四周阴影
+box-shadow: darkgrey 0px 0px 5px 5px;
+color：阴影颜色 ------------ 可选
+h-shadow ：水平偏移量 ----必选
+v-shadow：垂直偏移量-----必选
+blur：模糊距离 -------------可选
+spread：阴影尺寸---------- 可选
+inset：内阴影 --------------可选
+
+background-image:linear-gradient()渐变背景
+
+BFC
+margin塌陷
+
+::after伪元素解决float内容塌陷
+
+设置100vh，但实际大于100vh：
+这里设置的是content的尺寸，如果有border，padding就会大于，用怪异盒模型解决
+
+强制换行
+      1、word-break: break-all;只对英文起作用，以字母作为换行依据。
+      2、word-wrap: break-word;只对英文起作用，以单词作为换行依据。
+      3、white-space: pre-wrap;只对中文起作用，强制换行。
+//如果需要两个都起作用就设置两个属性就行
+禁止换行
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+
+

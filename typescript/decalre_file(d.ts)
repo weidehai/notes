@@ -1,0 +1,68 @@
+//类型声明文件d.ts引入的也是d.ts，并且引入的是声明类型文件暴露的类型
+export const Vue: VueConstructor; //这里Vue不是类型，在其他类型声明文件内也不能导入，只是说明在vue.js或vue.ts中导出的Vue必须是VueConstructor类型
+（相当于c中的头文件）
+
+
+
+declare module '*.vue' {
+  import Vue from 'vue';
+
+  export default Vue;
+}
+
+
+//表示将.vue文件看作一个Vue对象
+
+import Vue, { VNode } from 'vue';
+
+declare global {
+  namespace JSX {
+    // tslint:disable no-empty-interface
+    interface Element extends VNode {}
+    // tslint:disable no-empty-interface
+    interface ElementClass extends Vue {}
+    interface IntrinsicElements {
+      [elem: string]: any
+    }
+  }
+}
+
+//在 d.ts 声明文件中，任何的 declare 默认就是 global 的了，所以你在 d.ts 文件中是不能出现 declare global 的。
+//只有在模块文件中的定义，如果想要全局就使用 declare global
+//如果不全局声明，那么就需要在当前js的d.ts中引入这个类型，否则在写js的时候找不到这个类型
+
+不确定的属性
+interface xxx {
+    [propName:string]:any
+}
+
+非空断言
+xxx!.xxxx 相当于  xxxx && xxxx.xxx
+
+枚举的反向映射
+enum Color{
+    red
+    yellow
+    blue
+}
+
+Color[0]-----red
+
+
+接口也可以使用泛型
+interface boy<T>{
+    name:T
+}
+
+let weidehai:boy<string>
+
+
+配置文件中的
+【baseUrl，path】  路径映射
+【types,typeRoot,snode_module中的@type】查找声明文件的地方
+
+include 需要包含的编译文件（注意ts会将有可能作为被输出的文件忽略掉，比如文件夹下有a.ts和a.d.ts,那么a.d.ts是有可能被输出的，因为
+编译的时候可以若加上了输出声明文件选项就会输出同名声明文件）
+
+三斜杠指令导入
+import导入

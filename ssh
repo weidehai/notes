@@ -1,0 +1,19 @@
+//windows ssh配置密钥免密登录
+1.生成ssh key
+ssh-keygen -t rsa -C “comment”
+-t 指定密钥类型，默认是 rsa ，可以省略。
+-C 设置注释文字，比如邮箱。
+-f 指定密钥文件存储文件名。
+若不指定文件名，那么后面会要求输入文件名s
+(文件生成在用户家目录.ssh中)
+
+2.第一步会生成一个公钥和一个私钥
+将生成的公钥放到需要登陆的服务器上
+（linux服务器放在用户家目录.ssh/authorized_keys中，authorized_keys文件中可以存放多个公钥，以信任多个客户端的登录，需要注意的是每个公钥之间需要换行符分割）
+
+3.配置config（没有的话需要新建）
+为每个服务器指定需要的私钥
+Host alias
+    HostName server_ip
+    User username
+    IdentityFile 'appoint private_rsa file path'

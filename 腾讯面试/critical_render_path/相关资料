@@ -1,0 +1,5 @@
+CSSOM: https://varvy.com/performance/cssom.html
+https://www.cnblogs.com/zechau/p/5979683.html
+1.The CSSOM blocks anything from rendering
+2.The CSSOM has to be built everytime you load a new page
+3.There is a relationship between the CSS your page loads and the javascript your page loads(Make sure your pages are calling stylesheets before javascripts.)

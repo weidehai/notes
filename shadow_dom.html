@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--
+        Shadow DOM是HTML的一个规范
+        它允许浏览器开发者封装自己的HTML标签、CSS样式和特定的javascript代码，同时也可以让开发人员创建类似<video>这样的自定义一级标签
+        创建这些新标签内容和相关的的API被称为Web Component。
+        像input，video这些就是浏览器内置的封装好的shadow dom
+    -->
+    <input placeholder="please input username"></input>
+
+    <my-title></my-title>
+
+    <script>
+        //一个shadow dom的结构
+        //3.shadow host shadow dom的容器元素
+        //1.shadow root 根节点
+        //2.shadow tree 包含在根节点内部的节点树
+        //通过element.createShadowRoot来创建shadwo dom
+        let host = document.querySelector('my-title');
+        let root = host.attachShadow({mode:'open'});
+        root.innerHTML = `
+                        <style>
+                            :host{
+                                color: blue;
+                            }
+                        </style>
+                        <h1>hello shadow dom</h1>`
+    </script>
+</body>
+</html>

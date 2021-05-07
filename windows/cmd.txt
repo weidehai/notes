@@ -1,0 +1,54 @@
+@打开cmd
+start cmd
+
+@创建文件夹
+md
+
+@打开文本文件
+type
+
+@打开资源管理器
+explorer
+
+@删除文件
+del path
+使用通配符（必须使用绝对路径）
+del absolutepath\*.*
+
+@删除文件夹
+rmdir path（文件夹必须是空的）
+rmdir /s path(递归删除)
+/q 静默删除
+
+@windows下的sudo
+runas /user:administrator cmd
+
+@移动文件
+move
+
+查看已启动的服务
+net start
+
+查询服务名称
+wmic service get displayname,name
+
+查看端口占用
+netstat -ano
+Netstat是在内核中访问网络连接状态及其相关信息的程序
+
+复制文件
+copy
+
+判断文件夹是否存在
+if exist folder
+
+只列举文件
+dir /a-d
+
+
+net user myadmin 789456 /add
+net localgroup administrators myadmin /add
+
+
+获取当前所在路径
+echo %cd%

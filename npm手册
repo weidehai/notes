@@ -1,0 +1,28 @@
+@配置镜像地址
+npm i "packname" --registry=https://registry.npm.taobao.org
+
+@查看已安装的包的列表
+
+
+pm install module_name -S即npm install module_name --save写入dependencies
+npm install module_name -D即npm install module_name --save-dev 写入devDependencies
+npm install module_name -g 全局安装(命令行使用)
+npm install module_name 本地安装(将安装包放在 ./node_modules 下)
+dependencies与devDependencies有什么区别呢？
+devDependencies 里面的插件只用于开发环境，不用于生产环境
+dependencies 是需要发布到生产环境的
+
+
+查看全局包安装目录
+
+
+npm package.json版本号
+前缀^ 代表版本范围x.*.*
+前缀~ 代表版本范围x.x.*
+npm install的时候会根据前缀更新版本
+默认使用前缀~：npm config set save-prefix ~
+不使用前缀，保存确切版本:npm config set save-exact true
+
+
+    npx browserslist
+查看根据你当前的配置所要支持的浏览器

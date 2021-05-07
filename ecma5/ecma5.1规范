@@ -1,0 +1,27 @@
+expressions（表达式）
+表达式包含：
+  Primary Expressions
+  Left-Hand-Side Expressions
+  Postfix Expressions
+  UnaryExpression
+  MultiplicativeExpression
+  AdditiveExpression
+  ShiftExpression
+  RelationalExpression
+  EqualityExpression 
+  BitwiseANDExpression
+  BitwiseXORExpression
+  BitwiseORExpression
+  LogicalANDExpression
+  LogicalORExpression 
+  ConditionalExpression
+  AssignmentExpression
+  Comma Operator Expression
+后一个表达式包含前一个表达式，所以Primary Expressions在所有表达式中都可以出现
+PrimaryExpression :（PrimaryExpression的语法）
+  this
+  Identifier
+  Literal Array
+  Literal Object
+  Literal ( Expression )
+表达式里不能包含keyword，也就是js保留的关键字，只有在语句中能包含keyword

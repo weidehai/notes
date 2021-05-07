@@ -1,0 +1,84 @@
+@创建用户
+adduser
+@创建组
+addgroup
+@向组中添加用户
+gpasswd -a
+
+@查看用户所在的组,以及组内成员
+groups "username"
+
+@查看所有组及组内成员
+cat /etc/groups
+
+@查看所有账户
+cat /etc/passwd
+
+
+@为账户执行命令授权
+/etc/sudoers
+weidehai ALL=(ALL) NOPASSWD: /usr/local/bin/pip3.8
+第一段：用户名或者用户组，表示谁有权限来使用后面的配置。%sudo代表sudo组下的所有用户
+第二段：表示来源地，即从哪执行这条命令。ALL表示所有计算机
+第三段：表示sudo可以切换到什么用户。ALL表示所有用户
+第四段：表示sudo可以切换到哪些组下的用户。ALL表示所有组
+第五段：表示sudo之后能够执行的命令。NOPASSWD:ALL表示执行任意命令都不需要密码
+
+@SUID权限
+
+
+
+@软连接配置
+ln -n
+如果在相同目录下，写相对路径就可以，如果不在，就需要写绝对路径
+
+@修改文件夹/文件所属用户/所属组
+chgrp -R "targetname" "groupname"
+chown -R "targetname" "groupname"
+
+@ACL权限
+ACL权限就是除了属主，属组，其他之外的有一个权限分类
+查看acl权限：getfacl file_name
+设置acl权限：setfacl -m(设定) -b,-x -R
+setfacl -m u（g）:username:rwx file_name
+@查看磁盘分区及其挂载目录
+df -h
+@查看分区文件系统信息
+dumpe2fs -h 磁盘分区
+
+
+.和sh的形式执行脚本会开启一个子进程，也就是一个子shell，具有独立的变量
+source执行不会
+
+@awk文本处理
+F "分隔符" ('executor') (分割符，不设置就用默认的，executor是要执行的语句，比如分割后会产生列，每一个会用$1,...$n来表示，可以在executor中使用print $1打印)
+
+@安装程序要养成指定安装目录prefix的习惯
+./configure prefix=/usr/local/python3
+
+
+ssh生成密钥
+ssh-keygen -t rsa（windows本地生成和linux都在家目录中）
+然后把公钥放到服务器家目录./ssh/authorized_keys中
+vi /etc/ssh/sshd_config
+
+@脚本路径问题
+脚本分为运行时路径和存放路径，一个是在哪里执行的，一个是在哪里存放，而脚本中的相对路径都是相对与运行时路径的
+
+
+dpkg 即 package manager for Debian ，是 Debian 和基于 Debian 的系统中一个主要的包管理工具，可以用来安装、构建、卸载、管理 deb 格式的软件包。
+dpkg 主要是用来安装已经下载到本地的 deb 软件包，或者对已经安装好的软件进行管理。而 apt-get 可以直接从远程的软件仓库里下载安装软件。
+
+
+find ./ -iname filename 2>/dev/null
+这个方法是把查找错误提示转移到特定的目录中去。系统执行这个命令后，遇到错误的信息就直接输送到stderrstream 2中,/dev/null是一个特殊的文件，表明空的或者错误的信息
+
+重新获取ip
+ifconfig -a 获取所有网卡信息，可以看到所有网卡的名字
+ifconfig [网卡名称] down
+ifconfig [网卡名称] up
+
+exit 是一个 Shell 内置命令，用来退出当前 Shell 进程，并返回一个退出状态；使用$?可以接收这个退出状态
+exit 命令可以接受一个整数值作为参数，代表退出状态。如果不指定，默认状态值是 0。
+一般情况下，退出状态为 0 表示成功，退出状态为非 0 表示执行失败（出错）了。
+exit 退出状态只能是一个介于 0~255 之间的整数，其中只有 0 表示成功，其它值都表示失败。

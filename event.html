@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        #div2{
+            width: 100px;
+            height: 100px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1">
+        <div id="div2"></div>
+    </div>
+    <script>
+        window.onload = function () {
+            let div1 = document.getElementById('div1')
+            let div2 = document.getElementById('div2')/*
+            document.body.addEventListener('mousedown',()=>{
+                //console.log('body mousedown')
+            })
+            document.body.addEventListener('click',()=>{
+                console.log('body click')
+            })
+            document.body.addEventListener('mouseup',()=>{
+                console.log('body mouseup')
+            })
+            div1.addEventListener('mousedown',()=>{
+                console.log('div1 mousedown')
+            })
+            div1.addEventListener('click',()=>{
+                console.log('div1 click')
+            })
+            div1.addEventListener('mouseup',()=>{
+                console.log('div1 mouseup')
+            })
+            div2.addEventListener('mousedown',()=>{
+                console.log('div2 mousedown')
+            })
+            div2.addEventListener('click',()=>{
+                console.log('div2 click')
+            })
+            div2.addEventListener('mouseup',()=>{
+                console.log('div2 mouseup')
+            })*/
+            //------------------touch-------------------
+            document.body.addEventListener('touchstart',()=>{
+
+            })
+            document.body.addEventListener('click',()=>{
+                console.log('body click')
+            })
+            document.body.addEventListener('touchend',()=>{
+                console.log('body touchend')
+            })
+            div1.addEventListener('touchstart',()=>{
+                console.log('div1 touchstart')
+            })
+            div1.addEventListener('click',()=>{
+                console.log('div1 click')
+            })
+            div1.addEventListener('touchend',()=>{
+                console.log('div1 touchend')
+            })
+            div2.addEventListener('touchstart',()=>{
+                console.log('div2 touchstart')
+            })
+            div2.addEventListener('click',()=>{
+                console.log('div2 click')
+            })
+            div2.addEventListener('touchend',()=>{
+                console.log('div2 touchend')
+            })
+        }
+        //click事件的触发顺序，div2 mousedown，div1 mousedown,body mousedown,div2 mouseup......，div2 click......
+    </script>
+</body>
+</html>

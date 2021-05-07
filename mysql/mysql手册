@@ -1,0 +1,386 @@
+mysql数据类型
+TINYINT	        1 byte	(-128，127)	(0，255)小整数值
+SMALLINT	    2 bytes	(-32 768，32 767)	(0，65 535)大整数值
+MEDIUMINT	    3 bytes	(-8 388 608，8 388 607)	(0，16 777 215)大整数值
+INT或INTEGER	4 bytes	(-2 147 483 648，2 147 483 647)	(0，4 294 967 295)大整数值
+BIGINT	        8 bytes	(-9,223,372,036,854,775,808，9 223 372 036 854 775 807)	(0，18 446 744 073 709 551 615)极大整数值
+FLOAT	        4 bytes	(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)	0，(1.175 494 351 E-38，3.402 823 466 E+38)单精度浮点数值
+DOUBLE	        8 bytes	(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)	0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)双精度浮点数值
+
+DATE	    3	1000-01-01/9999-12-31	YYYY-MM-DD	日期值
+TIME	    3	'-838:59:59'/'838:59:59'	HH:MM:SS	时间值或持续时间
+YEAR	    1	1901/2155	YYYY	年份值
+DATETIME	8	1000-01-01 00:00:00/9999-12-31 23:59:59	YYYY-MM-DD HH:MM:SS	混合日期和时间值
+TIMESTAMP	4   1970-01-01 00:00:00/2038，结束时间是第 2147483647 秒，北京时间 2038-1-19 11:14:07，格林尼治时间 2038年1月19日 凌晨 03:14:07 YYYYMMDD HHMMSS	混合日期和时间值，时间戳
+
+CHAR	    0-255 bytes	定长字符串
+VARCHAR	    0-65535 bytes	变长字符串
+TINYBLOB	0-255 bytes	不超过 255 个字符的二进制字符串
+TINYTEXT	0-255 bytes	短文本字符串
+BLOB	    0-65 535 bytes	二进制形式的长文本数据
+TEXT	    0-65 535 bytes	长文本数据
+MEDIUMBLOB	0-16 777 215 bytes	二进制形式的中等长度文本数据
+MEDIUMTEXT	0-16 777 215 bytes	中等长度文本数据
+LONGBLOB	0-4 294 967 295 bytes	二进制形式的极大文本数据
+LONGTEXT	0-4 294 967 295 bytes	极大文本数据
+
+//创建数据库
+create database if not exists "yourdatabasename"
+
+
+//创建数据表
+create table if not exists `project_demo` (
+    project_id int auto_increment not null,
+    project_url varchar(100) not null,
+    project_pic varchar(100) not null,
+    project_time varchar(15) not null,
+    uid varchar(100) not null,
+    primary key (project_id)
+)engine=InnoDB default charset=utf8;
+//改变表名
+alter table "yourtablename" rename to "new tablename"
+
+create table if not exists `server_monitor` (
+    id int auto_increment not null,
+    article_title varchar(100) not null,
+    article_content longtext,
+    article_time varchar(10) not null,
+    article_tag varchar(20) not null,
+    post_key varchar(50) not null,
+    primary key (id)
+)engine=InnoDB default charset=utf8mb4 collate=utf8mb4_unicode_ci;
+
+//删除表
+drop table if exists draft
+
+//简单描述表结构，字段类型
+desc "yourtablename"
+//查看表创建时的设置信息
+show create tabel "yourtable name"
+
+//插入数据
+insert into "yourtablename" (project_url,project_pic,project_time,uid) values ("/project_demo/project_1/app.html","/project_demo/project_1/perview.jpg","2019-11-12 18:30","29810743523854058461587920565873")
+
+//添加字段
+alter table "yourtablename" add "fieldname" "datatype"
+//修改字段
+alter table "yourtablename" modify "fieldname" "datatype"
+//修改字段名
+alter table "yourtablename" change "oldfieldname" "newfieldname" "datatype"
+//刪除字段
+alter table "yourtablename" drop "fieldname"
+//设置不重复的字段
+内置函数：unique()
+
+
+//删除数据
+delete from "yourtablename" where uid=00478514822101395731588489159906
+
+//更新数据
+update "yourtablename" set fieldname="value" where fieldname="value"
+@将一个字段colum2的值赋给colum1
+UPDATE tableName SET column1 = column2;
+
+update articles set "article_time"="2020-06-28" where "post_key"="4361593353713650"
+
+//查询从指定位置开始，指定数量的数据
+select * from "yourtablename" limit start,num
+
+//查看表的索引
+show index from "table_name"
+//设置表的索引
+1.单字段索引
+2.多字段联合索引
+
+@添加外键约束
+ALTER TABLE woneblog.articles ADD CONSTRAINT fk_author FOREIGN KEY(author) REFERENCES woneblog.admin(admin_name)
+
+
+SHOW VARIABLES WHERE Variable_name LIKE 'character_set_%' OR Variable_name LIKE 'collation%';
+
+//关联表（外键约束）
+当两个数据表有关联的时候，就可以考虑使用外键约束来管理
+比如，博客及评论是有关联的，评论必须依赖博客而存在，所以评论是从表，博客是主表
+博客表数据结构如下
+CREATE TABLE `blogs` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`title` varchar(32) NOT NULL,
+`time` varchar(32) NOT NULL,
+`content` varchar(32) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+评论表数据结构如下
+CREATE TABLE `comments` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+ `nick` varchar(20) NOT NULL,
+`title` varchar(32) NOT NULL,
+`time` varchar(32) NOT NULL,
+`content` varchar(32) NOT NULL,
+`blog_id` int(11) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+这样两张表没有关联，看起来不是很合理，因为评论中有可能出现没有这篇博客，但是有这篇博客的评论的情况,所以可以做一个约束，对blog_id做约束
+也就是评论所属的blog_id必须存在于blogs表中
+CREATE TABLE `comments` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+ `nick` varchar(20) NOT NULL,
+`title` varchar(32) NOT NULL,
+`time` varchar(32) NOT NULL,
+`content` varchar(32) NOT NULL,
+`blog_id` int(11) NOT NULL, //表示评论是属于那篇博客
+PRIMARY KEY (`id`)
+CONSTRAINT `fk_blogs_key` FOREIGN KEY (`blog_id`) REFERENCES `blogs` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+数据库备份
+热备份:
+1.备份全部数据
+mysqldump --all-databases > all_databases.sql
+2.指定备份数据库
+mysqldump db_name > backup-file.sql
+mysqldump --databases db_name1 [db_name2 ...] > my_databases.sql
+
+恢复
+mysql < dump.sql
+
+
+@查看创建语句
+SHOW CREATE DATABASE(table) db_name(tb_name)
+
+@查看变量
+SHOW VARIABLES LIKE 'max_join_size';
+SHOW SESSION VARIABLES LIKE 'max_join_size';
+SHOW VARIABLES LIKE '%size%';
+SHOW GLOBAL VARIABLES LIKE '%size%';
+
+@全文索引
+中文全文索引分词器：ngram，mysql5.0版本以上内置
+第一：设置分词长度token以及停词表stopword
+ngram_token_size
+配置文件中配置
+[mysqld]
+ngram_token_size=2
+第二：创建索引，要搜索那个字段就为那个字段创建，多个字段创建联合索引
+
+The stopword list is loaded and searched for full-text queries using the server character set and collation
+(the values of the character_set_server and collation_server system variables).
+False hits or misses might occur for stopword lookups if the stopword file or columns used for
+full-text indexing or searches have a character set or collation different from character_set_server or collation_server.
+大概就是停词表的字符编码要和索引字段的字符编码一致
+自定义停词表
+To define your own stopword list for all InnoDB tables,
+define a table with the same structure as the INNODB_FT_DEFAULT_STOPWORD table,
+populate it with stopwords, and set the value of the innodb_ft_server_stopword_table
+option to a value in the form db_name/table_name before creating the full-text index.
+The stopword table must have a single VARCHAR column named value.
+The following example demonstrates creating and configuring a new global stopword table for InnoDB.
+demo:
+CREATE TABLE my_stopwords(value VARCHAR(30)) ENGINE = INNODB;
+SET GLOBAL innodb_ft_server_stopword_table = 'test/my_stopwords';
+Verify that the specified stopword ('Ishmael') does not appear by querying the words in INFORMATION_SCHEMA.INNODB_FT_INDEX_TABLE.
+停词不会出现在索引表中，可以以此来验证停词表是否生效
+设置好停词表后optimize table articles;来重新组织一下数据
+OPTIMIZE TABLE reorganizes the physical storage of table data and associated index data,
+to reduce storage space and improve I/O efficiency when accessing the table.
+The exact changes made to each table depend on the storage engine used by that table.
+
+
+
+https://dev.mysql.com/doc/refman/8.0/en/information-schema-innodb-ft-index-table-table.html
+'''
+下载常用中文停词表，使用python写脚本生成插入语句文本
+将文本作为命令导入mysql
+'''
+
+update 表名 set 字段 = replace(字段, '要修改的内容' , '修改后的内容');
+
+
+update articles set article_content = replace(article_content, '../static/upload/4541574866822903/4541574866822903/20191128095032.jpg' , '../static/upload/4541574866822903/20191128095032.jpg');
+
+停止mysql服务
+mysqladmin -u root shutdown
+安装mysql为window服务
+mysqld --install mysql8.0
+移除mysql服务
+mysqld --remove
+启动mysql服务
+sc start mysql8.0或者net start mysql8.0
+
+修改root密码
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'xxxxxxxxxxxx';
+删除用户
+DROP USER 'finley'@'localhost';
+创建用户
+CREATE USER 'xxxxxx'@'localhost'
+  IDENTIFIED BY 'xxxxxxxx';
+CREATE USER 'xxxxxx'@'localhost';
+用户授权
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER
+  ON xxxxxx.*
+  TO 'xxxxxx'@'localhost';
+
+GRANT SELECT
+  ON xxxxxxx.*
+  TO 'xxxxxx'@'localhost';
+  
+你想root使用123456从任何主机连接到mysql服务器。  update mysql.user set host = '%' where user = 'username';
+CREATE USER 'wonetest'@'%';
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON woneblog.* TO 'woneroot'@'localhost';
+GRANT TRIGGER  ON woneblog.* TO 'woneroot'@'localhost';
+grant REFERENCES on woneblog.* to 'woneroot'@'localhost';
+grant TRIGGER on woneblog.* to 'woneroot'@'localhost';
+REFERENCES（外键权限）,  LOCK TABLES（备份需要的权限）, TRIGGER（触发器权限）
+
+
+撤销用户权限
+revoke all on myblog.* from 'woneroot'@'localhost';
+revoke TRIGGER on woneblog.* from 'woneroot'@'localhost';
+
+查看用户权限
+show grants for root;
+show grants for 'woneroot'@'localhost';
+
+
+修改数据库名字
+create database woneblog
+rename table myblogwone.admin to woneblog.admin;
+rename table myblogwone.articles to woneblog.articles;
+rename table myblogwone.drafts to woneblog.drafts;
+rename table myblogwone.comment to woneblog.comment;
+rename table myblogwone.blogtags to woneblog.blogtags;
+rename table myblogwone.timeline to woneblog.timeline;
+rename table myblogwone.myblog_article_ftsw to woneblog.myblog_article_ftsw;
+
+修改表名
+ALTER TABLE blogtags RENAME TO article_tags;
+ALTER TABLE articles RENAME TO admin_wone_articles
+删除数据库
+drop database myblogwone;
+
+
+mysql连接
+mysql -h host -P port -u username -p password
+
+mysql8.0默认使用caching_sha2_password authentication plugin加密插件（sha2算法加密）
+如果本地不支持加密，使用IDENTIFIED WITH mysql_native_password回退到原始加密
+
+
+清空表
+truncate table xxxxx;
+添加外键约束
+ALTER TABLE xxxx ADD CONSTRAINT xxxx FOREIGN KEY(xx) REFERENCES xxx(xxx)
+ALTER TABLE woneblog.admin_wone_articles ADD CONSTRAINT ft_author FOREIGN KEY(author) REFERENCES woneblog.admin(admin_name) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+[CONSTRAINT [symbol]] FOREIGN KEY
+[index_name] (index_col_name, ...)
+REFERENCES tbl_name (index_col_name,...)
+[ON DELETE reference_option]
+[ON UPDATE reference_option]
+reference_option:
+RESTRICT | CASCADE | SET NULL | NO ACTION
+如果子表试图创建一个在父表中不存在的外键值，InnoDB会拒绝任何INSERT或UPDATE操作。如果父表试图UPDATE或者DELETE任何子表中存在或匹配的外键值，最终动作取决于外键约束定义中的ON UPDATE和ON DELETE选项。InnoDB支持5种不同的动作，如果没有指定ON DELETE或者ON UPDATE，默认的动作为RESTRICT:
+1. CASCADE: 从父表中删除或更新对应的行，同时自动的删除或更新自表中匹配的行。ON DELETE CANSCADE和ON UPDATE CANSCADE都被InnoDB所支持。
+2. SET NULL: 从父表中删除或更新对应的行，同时将子表中的外键列设为空。注意，这些在外键列没有被设为NOT NULL时才有效。ON DELETE SET NULL和ON UPDATE SET SET NULL都被InnoDB所支持。
+3. NO ACTION: InnoDB拒绝删除或者更新父表。
+4. RESTRICT: 拒绝删除或者更新父表。指定RESTRICT（或者NO ACTION）和忽略ON DELETE或者ON UPDATE选项的效果是一样的。
+5. SET DEFAULT: InnoDB目前不支持。
+外键约束使用最多的两种情况：
+1）父表更新时子表也更新，父表删除时如果子表有匹配的项，删除失败；
+2）父表更新时子表也更新，父表删除时子表匹配的项也删除。
+前一种情况，在外键定义中，我们使用ON UPDATE CASCADE ON DELETE RESTRICT；
+后一种情况，可以使用ON UPDATE CASCADE ON DELETE CASCADE。
+删除外键
+alter table woneblog.admin_wone_articles drop foreign key ft_author;
+
+
+mysql触发器
+CREATE DEFINER=`woneroot`@`localhost` TRIGGER trigger_name trigger_time trigger_event ON tb_name FOR EACH ROW trigger_stmt
+DEFINER：事件定义者，用户名和主机
+trigger_name：触发器的名称
+tirgger_time：触发时机，为BEFORE或者AFTER
+trigger_event：触发事件，为INSERT、DELETE或者UPDATE
+tb_name：表示建立触发器的表明，就是在哪张表上建立触发器
+trigger_stmt：触发器的程序体，可以是一条SQL语句或者是用BEGIN和END包含的多条语句
+所以可以说MySQL创建以下六种触发器：
+BEFORE INSERT,BEFORE DELETE,BEFORE UPDATE
+AFTER INSERT,AFTER DELETE,AFTER UPDATE
+
+删除触发器
+DROP TRIGGER [IF EXISTS] [schema_name.]trigger_name
+DROP TRIGGER woneblog.add_article_count;
+DROP TRIGGER woneblog.sub_article_count;
+DROP TRIGGER woneblog.sub_tag_count;
+DROP TRIGGER woneblog.add_tag_count;
+
+
+查看触发器
+查看单个数据库的触发器
+use 选择数据库
+SHOW TRIGGERS;
+查看全部触发器：
+SELECT * FROM information_schema.triggers
+
+CREATE DEFINER=`root`@`localhost` TRIGGER add_article_count after insert ON woneblog.admin_wone_articles FOR EACH ROW
+    update woneblog.admin set article_total=article_total+1 where admin_name='wone';
+
+CREATE DEFINER=`root`@`localhost` TRIGGER sub_article_count after delete ON woneblog.admin_wone_articles FOR EACH ROW
+    update woneblog.admin set article_total=article_total-1 where admin_name='wone';
+
+CREATE DEFINER=`root`@`localhost` TRIGGER sub_tag_count after delete ON woneblog.admin_wone_articles FOR EACH ROW
+    update woneblog.article_tags set quantity=quantity-1 where tag_name=old.article_tag;
+
+CREATE DEFINER=`root`@`localhost` TRIGGER add_tag_count after insert ON woneblog.admin_wone_articles FOR EACH ROW
+    update woneblog.article_tags set quantity=quantity+1 where tag_name=new.article_tag;
+
+
+查看mysql的所有用户
+SELECT * FROM INFORMATION_SCHEMA.USER_ATTRIBUTES
+
+
+A character set is a set of symbols and encodings. A collation is a set of rules for comparing characters in a character set. Let's make the distinction clear with an example of an imaginary character set.
+ALTER TABLE tbl_name
+    [[DEFAULT] CHARACTER SET charset_name]
+    [COLLATE collation_name]
+ALTER TABLE admin_wone_articles
+    DEFAULT CHARACTER SET utf8
+    COLLATE utf8_general_ci;
+
+ALTER TABLE t1 MODIFY
+    col1 VARCHAR(5)
+      CHARACTER SET latin1
+      COLLATE latin1_swedish_ci;
+
+    mysql> SHOW CHARACTER SET;
+    +----------+---------------------------------+---------------------+--------+
+    | Charset  | Description                     | Default collation   | Maxlen |
+    +----------+---------------------------------+---------------------+--------+
+    | big5     | Big5 Traditional Chinese        | big5_chinese_ci     |      2 |
+    | binary   | Binary pseudo charset           | binary              |      1 |
+    ...
+    | latin1   | cp1252 West European            | latin1_swedish_ci   |      1 |
+    ...
+    | ucs2     | UCS-2 Unicode                   | ucs2_general_ci     |      2 |
+    ...
+    | utf8     | UTF-8 Unicode                   | utf8_general_ci     |      3 |
+    | utf8mb4  | UTF-8 Unicode                   | utf8mb4_0900_ai_ci  |      4 |
+
+
+ALTER TABLE <表名> DROP INDEX <唯一约束名>;
+ALTER TABLE <数据表名> ADD CONSTRAINT <唯一约束名> UNIQUE(<列名>);
+ALTER TABLE admin_wone_articles ADD CONSTRAINT admin_name UNIQUE(admin_name);
+
+解决插入数据不连续的问题
+CREATE TRIGGER trigger_table after insert ON table FOR EACH ROW ALTER TABLE `table` AUTO_INCREMENT =1;
+CREATE DEFINER=`woneroot`@`localhost` TRIGGER add_article_count after insert ON woneblog.admin_wone_articles FOR EACH ROW
+    update woneblog.admin set article_total=article_total+1 where admin_name='wone';
+
+分布式数据库，大型数据库使用uuid
+小型数据库使用自增
+使用uuid()函数可生成uuid
+
+备份，建表，触发器，外键等都由root执行
+
+重置密码
+echo alter
+

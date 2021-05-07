@@ -1,0 +1,23 @@
+pip install --user package_name
+这样会将Python 程序包安装到 $HOME/.local 路径下，其中包含三个子文件夹：bin，lib 和 share。
+
+pip show package_name (查看包路径)
+
+pip 将某包指定到某目录安装：
+pip install --target=/home/ package_name
+
+pip install 参数
+-U
+upgrade
+-r <file>
+Install from the given requirements file. This option can be used multiple times.
+-i
+指定库的安装源
+
+导出依赖
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+
+
+

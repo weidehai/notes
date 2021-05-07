@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        /*
+        反引号(`),模板字符串
+        -----反引号中文本可以直接接受换行而不必使用\n换行符来强制换行。
+        -----即反引号中的${expression}占位符中expression可以为任意的JavaScript表达式，甚至为模板字符串。
+        -----如果大括号中的值不是字符串，则将按照一般的规则转换为字符串。如，若大括号中是一个对象，则将默认调用对象的toString方法，把对象转换为字符串。
+        -----标签模板，是执行函数的另一种方式，标签就是函数名，后面的模板字符串就是参数
+        */
+        console.log(`weidehai
+        weidehai`);
+        let name = 'weidehai';
+        function getname(){
+            return 'weidehai';
+        }
+        let templatestr = `my name is ${name}`;
+        console.log(`my name is ${getname()}`);
+        console.log(`my name is ${name}`);
+        console.log(`${templatestr}`);
+
+        function tag(strarr,...value) {
+            console.log(strarr);
+            for (i of strarr){
+                console.log(i);
+            }
+            for (k of value){
+                console.log(k);
+            }
+
+        }
+        tag`hello es6 ${5+9} and ${5*9}`;
+    </script>
+</body>
+</html>

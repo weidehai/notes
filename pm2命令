@@ -1,0 +1,30 @@
+@杀死node进程
+pm2 delete app_name|app_id  # 从列表中删除指定的进程
+pm2 delete all # 从列表中删除全部进程
+pm2 kill # 杀死守护进程
+
+@查看进程列表
+pm2 list
+
+@启动
+pm2 start "your server"
+
+
+#以下属性中以ssl开头的属性代表与证书配置有关，其他属性请根据自己的需要进行配置。
+server {
+         listen 443; #配置HTTPS的默认访问端口号为443。此处如果未配置HTTPS的默认访问端口，可能会造成Nginx无法启动。Nginx 1.15.0以上版本请使用listen 443 ssl代替listen 443和ssl on。
+         server_name www.certificatestests.com; #将www.certificatestests.com修改为您证书绑定的域名，例如：www.example.com。如果您购买的是通配符域名证书，要修改为通配符域名，例如：*.aliyun.com。
+         root html;
+         index index.html index.htm;
+         ssl_certificate cert/domain name.pem;  #将domain name.pem替换成您证书的文件名称。
+         ssl_certificate_key cert/domain name.key; #将domain name.key替换成您证书的密钥文件名称。
+         ssl_session_timeout 5m;
+         ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4; #使用此加密套件。
+                     ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4
+         ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #使用该协议进行配置。
+         ssl_prefer_server_ciphers on;
+         location / {
+         root html;  #站点目录。
+         index index.html index.htm;
+                    }
+      }

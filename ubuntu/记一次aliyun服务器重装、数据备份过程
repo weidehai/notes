@@ -1,0 +1,49 @@
+<<<<<<< Updated upstream
+系统重装：
+站点文件全部备份
+数据库备份
+配置文件备份
+
+下面贴的文档连接都是官方文档，纯英文，可以使用谷歌翻译一下（推荐大家看英文的官方文档，第一：官方文档权威性和实时性好；第二：中文翻译文档实时性差，百度的很多都是复制的
+讲的不清不楚
+虽然很难啃，可以借助翻译，习惯就好了，不过还是推荐看原文，因为翻译的东西多少会背离原本的意思，其实只要你有点英语基础加上本身有语言的基础，坚持看，不会的单词就查一下，空闲时间背背
+单词，一段时间后看原文就比较顺畅了，我现在也不是每个单词都看得懂，但是基本能顺畅的看下来（我的英语也不好，大学勉强过了四级，后来工作了坚持看英文文档，空闲时间
+背单词，差不多一年就可以比较顺畅的看文档了，不过主要还是一个兴趣吧，没兴趣强制自己去看效果不见得多好））
+为什么推荐看官方文档？
+没有人比作者更懂自己的作品，编程和文学不同，一千个读者有一千个哈姆雷特，但一条程序语句只能有一个意思，而只有作者自己才能准确的说出他写这个语句的作用
+1.重装系统前，文件备份到本地，我这里主要是两个网站文件，以及网站的数据库文件备份，同时还有nginx和uwsgi以及一些系统的配置文件（这不是必须的，如果你想重装系统后
+能快速配置服务）
+这里主要讲一下数据库的备份
+1.热备份和冷备份（我都做了）
+冷备份就是直接拷贝mysql的磁盘文件
+热备份就是mysqldump命令备份
+mysqldump --all-databases > all_databaes.sql
+https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html#option_mysqldump_master-data
+2.重装系统（aliyun控制台重装）
+3.安装服务
+apt文档https://ubuntu.com/server/docs/package-management
+1.nginx服务的安装与配置，ssh证书配置
+http://nginx.org/en/linux_packages.html
+2.mysql、redis服务的安装与配置
+https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
+node，pm2的安装
+4.数据库的恢复
+其实备份就是一个mysql的执行脚本文件，恢复只需要把这个脚本文件执行一遍就可以了
+mysql < script.sql
+https://dev.mysql.com/doc/refman/8.0/en/mysql-batch-commands.html
+5.虚拟环境的安装
+6.站点文件的上传
+7.uwsgi以及python依赖库的安装
+8.服务配置
+
+
+9.启动服务
+Loading configuration files
+uWSGI supports loading configuration files over several methods other than simple disk files:
+uwsgi --ini http://uwsgi.it/configs/myapp.ini # HTTP
+uwsgi --xml - # standard input
+uwsgi --yaml fd://0 # file descriptor
+uwsgi --json 'exec://nc 192.168.11.2:33000' # arbitrary executable
+10.测试
+
+flask学习，ngram学习，mysql索引学习，编写一键备份脚本

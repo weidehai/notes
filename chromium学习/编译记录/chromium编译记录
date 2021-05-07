@@ -1,0 +1,126 @@
+一.几个错误点
+1.gclient不走代理
+gclient其实是执行了python脚本，所以需要python走代理，网上找到的资料设置：
+HTTPS_PROXY=xxxx(ip):xxx(port)
+HTTP_PROXY=xxxx(ip):xxx(port)
+set HTTPS_PROXY=127.0.0.1:10809
+set HTTP_PROXY=127.0.0.1:10809
+set DEPOT_TOOLS_WIN_TOOLCHAIN=0
+具体代理地址需要查看你使用的什么代理软件，比如我用的v2rayN，代理地址是127.0.0.1:10809
+set DEPOT_TOOLS_WIN_TOOLCHAIN=0
+Also, add a DEPOT_TOOLS_WIN_TOOLCHAIN system variable in the same way, and set it to 0. This tells depot_tools to use your locally installed version of Visual Studio (by default, depot_tools will try to use a google-internal version).
+2.WINDOWSSDKDIR not found	
+这里是没设置windows sdk的路径，自己查看一下安装路径，然后设置
+set WINDOWSSDKDIR=C:\Program Files (x86)\Windows Kits\10
+3.debug tools，这个bug比较常见，网上有，就是默认安装sdk时没有安装debug tools，需要重新勾选上
+4.httplib2 ResponseNotReady()
+ninjalog_uploader.py
+这个是httplib2没走代理，找到出错位置修改，即可
+h = httplib2.Http(proxy_info = httplib2.ProxyInfo(httplib2.socks.PROXY_TYPE_HTTP, '127.0.0.1', 10809))
+
+fetch --no-history --nohooks chromium
+hooks用于下载编译工具包，可以之后再runhooks
+下载过程出错，可以执行
+gclient sync --no-history --nohooks
+gn gen out/Default --ide=vs --args="is_component_build = true is_debug = true"
+gn gen out/chrome75 --ide=vs --args="is_component_build = true is_debug = true"
+is_component_build = true - this uses more, smaller DLLs, and incremental linking.
+autoninja -C out\Default chrome
+autoninja -C out\chrome75 chrome
+
+获取指定版本的chromium代码
+上面fetch完毕后
+cd ./src
+git ls-remote --tags origin(查看远程所有分支)
+git fetch origin xxxxxxx（获取远程主机某一分支的某一个标签。不写分支名默认为master），这样就取回了origin主机上master分支的xxx标签的代码，这个代码使用FETCH_HEAD指向
+然后创建并切换到xxxx分支，这个分支指向FETCH_HEAD，也就是特定标签的代码
+git checkout -b xxxxx FETCH_HEAD
+git checkout -b 75.0.3770.7_local FETCH_HEAD
+gclient sync --with_branch_heads（下载编译依赖）
+如果出现fatal: The remote end hung up unexpectedly
+git config --global http.postBuffer 1048576000
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999
+将postBuffer的缓存设置为500M就可以了
+设置vs版本
+set GYP_MSVS_VERSION=2019
+
+
+
+# Make sure you have all the release tag information in your checkout.
+git fetch --tags
+# Checkout whatever version you need (known versions can be seen with 'git show-ref --tags')
+git checkout -b your_release_branch tags/75.0.3770.9   # or more explicitly, tags/74.0.3729.131
+gclient sync --with_branch_heads --with_tags
+
+
+libstdc++是gcc搞的，libc++是llvm搞的，他们都是C++标准库的实现。但因为这东西实现起来很恶心，有时会出现混用编译不了的问题。clang对libstdc++的支持会比反过来好不少。
+如果你只是自己独立的代码，优先考虑原装的。如果你用到了别的库，且接口上有C++ (STL)，就别挣扎了人家用啥你就用啥，除非你想加个交互层。
+
+75编译:
+75使用libstdc++标准库配合clang编译
+一、
+Traceback (most recent call last):
+  File "../../build/toolchain/win/tool_wrapper.py", line 51, in <module>
+    import win32file    # pylint: disable=import-error
+ImportError: No module named win32file
+
+解决办法：
+The following revision refers to this bug:
+  https://chromium.googlesource.com/chromium/src.git/+/e297aa678a6f485e329433237fa05f97961e1f5e
+
+commit e297aa678a6f485e329433237fa05f97961e1f5e
+Author: Robert Iannucci <iannucci@chromium.org>
+Date: Wed Dec 11 19:11:16 2019
+
+[toolchain/win/tool_wrapper] Remove superflush hack entirely.
+
+As of https://reviews.llvm.org/D42925, this is no longer necessary to
+do externally to lld-link.
+
+R=brucedawson@chromium.org, jessemckenna@chromium.org
+
+Bug: 1033106
+Change-Id: Ia99219ae91295566f5c7ac42eaa83945d7edd2c7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/1962898
+Reviewed-by: Bruce Dawson <brucedawson@chromium.org>
+Reviewed-by: Nico Weber <thakis@chromium.org>
+Commit-Queue: Robbie Iannucci <iannucci@chromium.org>
+Auto-Submit: Robbie Iannucci <iannucci@chromium.org>
+Cr-Commit-Position: refs/heads/master@{#723914}
+
+[modify] https://crrev.com/e297aa678a6f485e329433237fa05f97961e1f5e/build/toolchain/win/tool_wrapper.py
+
+二、
+In file included from ../../cc/scheduler/compositor_frame_reporting_controller.cc:5:
+In file included from ../..\cc/scheduler/compositor_frame_reporting_controller.h:10:
+In file included from ../..\base/time/time.h:62:
+../..\base/logging.h(734,3): error: no matching function for call to 'MakeCheckOpValueString'
+  MakeCheckOpValueString(&ss, v1);
+  ^~~~~~~~~~~~~~~~~~~~~~
+../..\base/logging.h(783,1): note: in instantiation of function template specialization 'logging::MakeCheckOpString<std::unique_ptr<cc::CompositorFrameReporter, std::default_delete<cc::CompositorFrameReporter> >, std::unique_ptr<cc::CompositorFrameReporter, std::default_delete<cc::CompositorFrameReporter> > >' requested here
+DEFINE_CHECK_OP_IMPL(NE, !=)
+^
+../..\base/logging.h(774,25): note: expanded from macro 'DEFINE_CHECK_OP_IMPL'
+      return ::logging::MakeCheckOpString(v1, v2, names);
+	  
+解决办法：
+The following revision refers to this bug:
+  https://chromium.googlesource.com/chromium/src.git/+/684c915a42fd8727bbaa80dccf7c5d938775bc40
+
+commit 684c915a42fd8727bbaa80dccf7c5d938775bc40
+Author: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
+Date: Tue Jun 25 10:22:43 2019
+
+CompositorFrameReportingController: Do not rely on C++20 features in DCHECK_NE call
+
+Follow-up to commit a572c15dbd ("Report the latency increase of pipeline
+stages in missed frames compared to not missed frames"), which ended up
+reverting commit aeed4d1 ("libstdc++: do not assume unique_ptr has ostream
+operator"). A call that looks like
+
+    DCHECK_NE(foo, nullptr);
+
+where |foo| is a std::unique_ptr fails with libstdc++ because there is no
+operator<< overload for std::unique_ptr until C++20 (libc++ just happens to
+have it):

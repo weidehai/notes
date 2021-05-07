@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        /*
+            难点：箭头函数的this指向：箭头函数的this是固定的，总是指向函数定义生效时所在的对象
+         */
+        
+        function arrow() {
+            setTimeout(()=>{
+                console.log(`id:${this.id}`)
+            })
+        }
+
+        //settimeout是window对象的方法，所以this指向window
+        function foo() {
+            window.setTimeout(function () {
+                console.log(`id:${this.id}`)
+            })
+        }
+
+        id = 20;
+        foo.call({id:50});   //20,虽然settimeout在foo内，但是settimeout还是window对象的方法，所以调用settimeout时，在foo内找不到，在foo外找到，所以this指向window
+        arrow.call({id:40});
+
+    </script>
+</body>
+</html>
