@@ -61,6 +61,9 @@ git config --global -l
 git config --system -l
 git config --local -l
 
+@删除配置
+
+git config --global --unset user.name
 
 为git配置代理:
 git config --global http.proxy "localhost:代理端口号"
@@ -135,3 +138,14 @@ git 合并的三种情况
 rebase   合并后，不会有分支合并信息
 merge  合并后，有分支合并信息
 fast forward 合并后，不会有分支合并信息
+
+
+
+@解决git中文乱码
+
+git config --global core.quotepath false 
+git config --global gui.encoding utf-8
+git config --global i18n.commit.encoding utf-8 
+git config --global i18n.logoutputencoding utf-8 
+
+set LESSCHARSET=utf-8
