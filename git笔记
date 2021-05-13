@@ -123,7 +123,8 @@ git config --local user.email 243395655@qq.com
 
 修改本地分支名
 git branch -m oldBranchName newBranchName
-
+修改当前分支名称
+git branch -M main
 
 git log --oneline --graph --decorate --all
 
