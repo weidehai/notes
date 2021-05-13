@@ -1,0 +1,1 @@
+C:\Windows\System32\drivers\etc\hosts  window本地dns定义文件
