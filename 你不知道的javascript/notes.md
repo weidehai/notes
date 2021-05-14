@@ -2,13 +2,7 @@
 
 ![image.png](https://i.loli.net/2021/05/11/UxjyJnhCt7ZdizB.png)
 
-
-
-
-
 ![image.png](https://i.loli.net/2021/05/11/mIhsGWVbSRM3794.png)
-
-
 
 ToInt32 首先执行ToNumber 强制类型转换，比如"123" 会先被转换为123，然后再执行ToInt32。
 
