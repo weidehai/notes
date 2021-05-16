@@ -93,7 +93,6 @@ vscode + prettier
 
 
 
-
 vscode所有配置
 {
     "files.associations": {
@@ -176,39 +175,40 @@ vscode常用的snippet
 
 
 	"create vue-ts template":{
-    		"prefix": "vue-ts",
-    		"body": [
-    			"<template>",
-    			"  <div id='$1'></div>",
-    			"</template>",
-    			"",
-    			"<script lang='$2'>",
-    			"import { Component, Vue } from 'vue-property-decorator';",
-    			"@Component",
-    			"export default class $3 extends Vue {}",
-    			"</script>",
-    			"",
-    			"<style lang='$4' scoped>",
-    			"</style>"
-    		]
-    	},
-    	"create vue template":{
-    		"prefix": "vue",
-    		"body": [
-    			"<template>",
-    			"  <div id='$1'></div>",
-    			"</template>",
-    			"",
-    			"<script>",
-    			"export default {}",
-    			"</script>",
-    			"",
-    			"<style lang='$4' scoped>",
-    			"</style>"
-    		]
-    	}
-	
-	
+			"prefix": "vue-ts",
+			"body": [
+				"<template>",
+				"  <div id='$1'></div>",
+				"</template>",
+				"",
+				"<script lang='$2'>",
+				"import { Component, Vue } from 'vue-property-decorator';",
+				"@Component",
+				"export default class $3 extends Vue {}",
+				"</script>",
+				"",
+				"<style lang='$4' scoped>",
+				"</style>"
+			]
+		},
+		"create vue template":{
+			"prefix": "vue",
+			"body": [
+				"<template>",
+				"  <div id='$1'></div>",
+				"</template>",
+				"",
+				"<script>",
+				"export default {}",
+				"</script>",
+				"",
+				"<style lang='$4' scoped>",
+				"</style>"
+			]
+		}
+
+
+​	
 	"create vuex-model template":{
 		"prefix": "vuex-model",
 		"body": [
@@ -236,10 +236,11 @@ vscode常用的snippet
 			"}"
 		]
 	}
-	
-	
-	
-	
+
+
+​	
+​	
+​	
 	"create vuex template":{
 		"prefix": "vuex",
 		"body": [
@@ -297,3 +298,7 @@ vscode常用的snippet
       }
     ]
   },
+
+### vscode透明背景设置
+
+body{background-image:url('file://C:/Users/24339/Pictures/Saved Pictures/208.jpg');background-size:cover;opacity:0.85;background-repeat:no-repeat;}
