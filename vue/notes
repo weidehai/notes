@@ -52,3 +52,7 @@ scoped编译的时候如果使用了子组件，会将scoped特性加到子组�
 在组件上绑定@click="clickCpn"事件，click事件无法触发也不生效，需要通过使用@click.native="clickCpn"，才能够执行clickCpn方法,   @click.native 监听组件根元素的原生事件 。
 
 除了 @click.native ，还可以在子组件中添加this.$emit ("click" ，value )方法 将子组件的值传到父组件
+
+
+
+vue每次依赖的数据更新都会去执行render函数，为的就是生成新的vnode，然后与老vnode对比，对有差异的vnode生成真实dom渲染到页面，能够尽可能的减少dom的更新范围（页面的性能主要消耗在dom的更新上）
