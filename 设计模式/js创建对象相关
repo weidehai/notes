@@ -221,5 +221,10 @@ var person1 = new Person('zzx', 22, 'Programmer');
 person1.sayName();
 这个例子中，除了使用 new 操作符并把使用的包装函数叫做构造函数之外，这个模式跟工厂模式其实是一模一样的。
 
-f() ---暂时叫做f函数
-Object函数和Function函数都是f()创建出来的，f()的
+原型链：
+记住这几点：
+所有东西都是对象，所以所有东西都可以使用Object.prototype上的东西
+Object.prototype没有原型
+对象的原型指向它的构造函数的原型
+所有的函数都是Funtion构造出来的，所以所有函数都可以使用Function.constructor.__proto__上的东西
+原型链是指__proto__.__proto__.__proto__.......
