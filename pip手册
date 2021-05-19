@@ -16,6 +16,7 @@ Install from the given requirements file. This option can be used multiple times
 
 导出依赖
 pip freeze > requirements.txt
+安装依赖
 pip install -r requirements.txt
 
 
