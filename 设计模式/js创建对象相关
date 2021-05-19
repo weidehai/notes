@@ -221,7 +221,5 @@ var person1 = new Person('zzx', 22, 'Programmer');
 person1.sayName();
 这个例子中，除了使用 new 操作符并把使用的包装函数叫做构造函数之外，这个模式跟工厂模式其实是一模一样的。
 
-作者：zzxprint
-链接：https://www.jianshu.com/p/358501f811f9
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+f() ---暂时叫做f函数
+Object函数和Function函数都是f()创建出来的，f()的
