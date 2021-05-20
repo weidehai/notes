@@ -31,7 +31,8 @@
 ![image.png](https://i.loli.net/2021/05/14/qtjNc5ib2KzvW6V.png)
 
 原因同上：vue内部会自动把组件名映射到短横线命名（遵守w3c规范），所以直接使用必须用短横线，如果是模板（会经过vue编译的）就可以使用其他方式，这会在vue编译的时候自动识别
-
+浏览器在解析dom的时候，会自动把大写全部转化为小写
+组件标签如果不用短划线，vue就不知道这个是原生标签还是自定义标签
 ## html自定义标签命名规范
 
 ![image.png](https://i.loli.net/2021/05/14/3T1zJIbAYarGncx.png)
