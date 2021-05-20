@@ -37,8 +37,29 @@ Function.prototype.myBind = function (custom_ctx) {
         }
     }
     return f
+    // bind函数会形成闭包
 }
-
+/*
+从上面的代码执行结果中我们发现一点，第一次bind绑定的对象是固定的，也就是后面通过bind或者call再次绑定的时候，就无法修改这个this了，从es5文档中我们能找到答案。
+When the [[Call]] internal method of a function object, F, which
+was created using the bind function is called with a this value and a
+list of arguments ExtraArgs, the following steps are taken:
+Let boundArgs be the value of F’s [[BoundArgs]] internal property.
+Let boundThis be the value of F’s [[BoundThis]] internal property.
+Let target be the value of F’s [[TargetFunction]] internal property.
+Let args be a new list containing the same values as the list
+boundArgs in the same order followed by the same values as the list
+ExtraArgs in the same order.
+Return the result of calling the [[Call]] internal method of target
+providing boundThis as the this value and providing args as the
+arguments.
+这段话中说到如果我们在一个由bind创建的函数中调用call，假设是x.call(obj,y,z,…)并且传入this，和参数列表的时候会执行下面的步骤：
+1.首先用三个参数分别保存函数x函数的内部属性中存的this值、目标函数和参数 列表。
+2.然后执行目标函数的内部call函数，也就是执行目标函数的代码，并且传入1中保存的this和实参(这里的实参是目标函数本来就有的也就是bind时传入的实参加上调用call时传的实参)
+重点在1中，从es5的bind函数说明中我们知道，当我们用一个函数调用bind的时候，返回的函数中会保存这三个参数。所以最后调用call的时候执行的函数是目标函数，也就是调用了bind的函数，
+传入的this也是bind调用时传入的，这些都是无法被修改的了，但是参数是调用bind和call时的叠加，这是我们唯一可以修改的地方。执行两次bind的原理可以参考bind的源码，
+和call的差不多，也是目标函数和this是被固定的了，只有参数列表会叠加。
+*/
 let a = {
     name:"weidehai",
     say(words){

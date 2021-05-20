@@ -225,6 +225,45 @@ person1.sayName();
 记住这几点：
 所有东西都是对象，所以所有东西都可以使用Object.prototype上的东西
 Object.prototype没有原型
-对象的原型指向它的构造函数的原型
-所有的函数都是Funtion构造出来的，所以所有函数都可以使用Function.constructor.__proto__上的东西
-原型链是指__proto__.__proto__.__proto__.......
+对象的原型(__proto__)指向它的构造函数的原型对象（prototype ）
+所有的函数都是Funtion构造出来的，所以所有函数都可以使用Function.prototype.constructor.prototype上的东西
+原型链是指__proto__.__proto__.__proto__.......,当谈到继承时，JavaScript 只有一种结构：对象。
+
+
+每个实例对象（ object ）都有一个私有属性（称之为 __proto__ ）指向它的构造函数的原型对象（prototype ）。
+该原型对象也有一个自己的原型对象( __proto__ ) ，层层向上直到一个对象的原型对象为 null。
+根据定义，null 没有原型，并作为这个原型链中的最后一个环节。
+
+当使用函数创建出一个对象的时候，这个对象会被加上一个__proto__属性，指向它的构造函数的原型对象（prototype ）
+c = new Object()
+c.__proto__ == Object.prototype.constructor.prototype  //true
+Object.__proto__ == Function.prototype.constructor.prototype //true
+
+
+function person(){
+
+}
+
+person1 = new person()
+这时person1的原型指向一个包含__proto__和constructor的属性的对象，这个__proto__属性指向Object.prototype
+console.dir(person1.__proto__)
+person1.__proto__.__proto__ == Object.prototype  //true
+
+person.prototype.constructor = {
+    prototype:{
+        desc:"i change person's prototype.constructor.prototype"
+    }
+}
+
+
+person1 = new person()
+如果按照上面的说法，person1.__proto__ == person.prototype.constructor.prototype  //false
+
+所以这句话应该这样理解：当使用函数创建出一个对象的时候，这个对象会被加上一个__proto__属性，指向它的构造函数的原型对象（prototype ）
+
+当对象在创建的时候就会去找其构造函数（构造函数就是自己）的prototype属性（也就是说找的是构造函数的protoype属性，而不是prototype.constructor的prototype属性，
+prototype.constructor只是JavaScript语言设计的历史遗留物。由于prototype.constructor属性是可以变更的，所以未必真的指向对象的构造函数，只是一个提示。改变构造函数不影响对象的创建
+因为在引擎内部，调用哪个函数哪个函数就是构造函数，不受函数的prototype.constructor的影响），将这个属性的引用给对象的__proto__,也就是说在对象创建完成之后__proto__就确定好了，而不是
+在运行时再到constructor.prototype中找
+
+

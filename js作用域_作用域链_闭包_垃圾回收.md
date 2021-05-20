@@ -60,7 +60,7 @@ chrome中函数有一个属性*[[Scopes]]*，再函数定义的时候，预先�
 
 ## 闭包
 
-闭包时一个作用域，是函数作用域链上的一个节点
+闭包是一个作用域，是函数作用域链上的一个节点
 
 ```
 let outer = function() {
@@ -80,7 +80,6 @@ let outer = function() {
 ```
 const fn = function() {
     let num = 0;
-    
     return function() {
         return num += 1;
     }
@@ -121,3 +120,9 @@ f1(); // 3
 
 此时的 f1 就是闭包的引用，因此就没法被回收掉
 然后使 f1 = null 手动解除引用，再重新赋值后就会发现这个时候闭包也被回收掉了
+
+addEventListener在同一个事件名，同一个函数的情况下后面监听的会覆盖前面监听的，所以如果addEventListener监听的函数导致发生了内存泄漏，那么再次监听就会释放掉这个泄漏的内存，也就是
+最多只泄漏一份内存，不会无限叠加
+
+TODO: 到底addEventListener需不需要removeEventListener，会不会造成内存泄漏
+TODO: bind，call，apply会不会造成内存泄漏

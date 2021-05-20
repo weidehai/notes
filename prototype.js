@@ -11,5 +11,13 @@ constructor其实没有什么用处，只是JavaScript语言设计的历史遗�
 不过，从编程习惯上，我们应该尽量让对象的constructor指向其构造函数，以维持这个惯例。
 所以constructor并不是真实的构造函数，即使修改了这个属性，创建对象时解释器还是会将函数本身作为构造函数来创建对象
 
+function a(){}
+a.prototype = {
+    desc:"no construcotr"
+}
+c=new a()
+c._proto__ == a.prototype.constructor.prototype  //false
+
+
 undefined 和 null 只有原始值 不可以有属性和方法 不会产生包装类
 undefined/null 是一个原始值 不是对象 就没有原型 就调用不到Object.prototype(原型链最终原型)的 toString 方法

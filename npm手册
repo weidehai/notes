@@ -24,5 +24,8 @@ npm install的时候会根据前缀更新版本
 不使用前缀，保存确切版本:npm config set save-exact true
 
 
-    npx browserslist
+npx browserslist
 查看根据你当前的配置所要支持的浏览器
+
+
+package.json与package-lock.json相同时，npm安装包时以package-lock.json为准，当两者不同时，npm install时会以package.json为准，并同时更新package-lock.json
