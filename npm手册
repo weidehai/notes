@@ -29,3 +29,5 @@ npx browserslist
 
 
 package.json与package-lock.json相同时，npm安装包时以package-lock.json为准，当两者不同时，npm install时会以package.json为准，并同时更新package-lock.json
+
+npm info package
