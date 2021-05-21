@@ -124,5 +124,9 @@ f1(); // 3
 addEventListener在同一个事件名，同一个函数的情况下后面监听的会覆盖前面监听的，所以如果addEventListener监听的函数导致发生了内存泄漏，那么再次监听就会释放掉这个泄漏的内存，也就是
 最多只泄漏一份内存，不会无限叠加
 
-TODO: 到底addEventListener需不需要removeEventListener，会不会造成内存泄漏
+到底addEventListener需不需要removeEventListener，会不会造成内存泄漏
+addEventlistener的内存泄漏只存在于较老版本的ie浏览器，对于现代浏览器，不需要removeEventListener，浏览器会自动对删除的dom解绑addEventListener，但是闭包造成的内存泄漏依然存在
 TODO: bind，call，apply会不会造成内存泄漏
+bind是会造成内存泄漏的
+xxxxx.bind(dom);  //即使dom被删除，但是不会被回收
+xxxxx.call(dom) xxxxx.apply(dom) //不会造成内存泄漏
