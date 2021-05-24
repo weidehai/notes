@@ -126,3 +126,77 @@ Editor对象实现了EditorInterface
 Editor = BaseEditor 
 
 ReactEditor 扩展自BaseEditor 
+
+
+
+
+
+## 四种节点对象类型
+
+### Editor节点对象
+
+是整个文档树的根节点，对象中有文本编辑操作的方法，获取编辑状态的方法等，通过children指针指向其子节点
+
+### Elements对象
+
+构成了文档的中间层，就是除了叶子节点和editor节点剩下的都是中间层，中间层可以嵌套
+
+Elements make up the middle layers of a richtext document
+
+根据dom对象可将，中间层元素可以分为两种类型：块级元素和行内元素
+
+All elements default to being "block" elements. They each appear separated by vertical space, and they never run into each other.
+
+slate默认将所有element设置为块级元素
+
+Note that inline nodes cannot be the first or last child of a parent block, nor can it be next to another inline node in the children array. Slate will automatically space these with { text: '' } children by default with normalizeNode.
+
+如果行内节点的父节点是块级元素，则行内节点不能是第一个或者最后一个子节点，如果有过个类型为行内节点的子节点，那么这些子节点不能互为相邻的兄弟节点，如果相邻了slate会自动使用一个空白的叶子节点来分割他们
+
+### void节点对象
+
+Elements default to being non-void, meaning that their children are fully editable as text. But in some cases, like for images, you want to ensure that Slate doesn't treat their content as editable text, but instead as a black box.
+
+不可编辑的节点对象
+
+### text节点对象
+
+Text nodes are the lowest-level nodes in the tree, containing the text content of the document, along with any formatting
+
+text节点叶子节点，包含了文本和样式属性
+
+
+
+onDOMSelectionChange
+
+监听原生事件selectionchange，每当getSelection的值，也就是selection发生变化就会触发
+
+
+
+EDITABLE组件内部自己维护着一个状态
+
+ // Keep track of some state for the event handler logic.
+
+ const state = useMemo(
+
+  () => ({
+
+   isComposing: false,
+
+   isDraggingInternally: false,
+
+   isUpdatingSelection: false,
+
+   latestElement: null as DOMElement | null,
+
+  }),
+
+  []
+
+ )
+
+
+
+![image-20210524170650893](https://i.loli.net/2021/05/24/RQfeEyJ6BU8m9dA.png)
+
+判断选区的起始节点和结束节点是否是可编辑的

@@ -60,3 +60,9 @@ let [ff,sss,ttt] = 'abc';
 log(ff,sss,ttt);
 let {length:len} = 'abcdfg';
 log(len);
+
+
+let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+x // 1
+y // 2
+z // { a: 3, b: 4 }
