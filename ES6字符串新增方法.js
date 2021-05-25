@@ -25,3 +25,5 @@ let verbos = '  i am a programer  '
 log(verbos.trimEnd());
 log(verbos.replace(/\s/g,""));
 
+
+// 字符串slice返回字符串，没有的话就是空字符串

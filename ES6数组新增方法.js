@@ -22,3 +22,6 @@ log(arr.reduce((prevalue,curvalue)=> { return prevalue+curvalue}));
 let a = [1,2,3,4,5]
 a.reduce((a,b)=>{return a.push(b)},[])
 //这里会报错push is not a function,这是因为push方法返回的不是push后的新数组而是push后的新数组的长度，所以第二次在push就错了
+
+
+// 数组slice返回数组，没有的话就是空数组

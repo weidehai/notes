@@ -200,3 +200,11 @@ EDITABLE组件内部自己维护着一个状态
 ![image-20210524170650893](https://i.loli.net/2021/05/24/RQfeEyJ6BU8m9dA.png)
 
 判断选区的起始节点和结束节点是否是可编辑的
+
+
+
+## Path 
+
+Path arrays are a list of indexes that describe a node's exact position in a Slate node tree
+
+path数组由描述节点在slate节点数中的位置的索引组成
