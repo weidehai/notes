@@ -208,3 +208,4 @@ EDITABLE组件内部自己维护着一个状态
 Path arrays are a list of indexes that describe a node's exact position in a Slate node tree
 
 path数组由描述节点在slate节点数中的位置的索引组成
+
