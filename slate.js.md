@@ -208,3 +208,51 @@ EDITABLE组件内部自己维护着一个状态
 Path arrays are a list of indexes that describe a node's exact position in a Slate node tree
 
 path数组由描述节点在slate节点数中的位置的索引组成
+
+
+
+
+
+标红出来的层级是由renderElement或renderLeaf控制的，我们可以传入自定义的函数来渲染，同时不要忘记将children渲染进去，保证Slate文档的完整性
+
+
+
+内核层：
+
+对于研究内核代码，我更喜欢的是做一个简单的样例，然后找到一个自己想要研究的点，从这里开始跟踪下去进行测试、研究，所幸Slate官方已经有了丰富的样例，从github上clone项目到本地，安装好以来后，执行yarn run start就可以看到了，一开始我选择的是最简单的plain text这个样例进行研究，这个样例上我研究了两个点：
+
+​	1.是我们在进行文本换行的时候，slate是如何处理的 
+
+​	2.是当我们改变焦点（改变光标位置）的时候，slate是如何处理的
+
+1.文本换行
+
+2.焦点
+
+第二个样例
+
+自己写了一个代码块的功能，之前也用原生的写过，现在用slate实现一下，
+
+实现的功能
+
+1.插入代码块（pre标签）
+
+2.代码块内换行不切断节点，而是插入\n
+
+3.按下ctrl+q退出代码块，如果pre标签没有下一个兄弟节点，则插入新的节点，如果有就跳到这个节点后面
+
+使用到的api有
+
+1.插入代码块 Editor.setNode()
+
+2.代码块内换行 Editor.insertText
+
+3.判断当前焦点是否在代码块内
+
+4.Editor.nodes
+
+5.获取下一个兄弟节点
+
+6.设置光标到下一个兄弟节点Transform.select()
+
+在这个样例中，我研究了一下insertText的执行流程
