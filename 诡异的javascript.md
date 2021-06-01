@@ -14,5 +14,7 @@ a=(1,2,3)  //a=3
 
 {}+{}.length   //NaN 第一个{}被看作空代码块，第二个与+符号作用被看作空的对象字面量，先取length（返回undefined），+undefined=NaN
 
-({}+{}).length  
+({}+{}).length 
+
+
 
