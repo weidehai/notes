@@ -13,3 +13,8 @@ certmgr.msc可查看系统中所有根证书
 
 https://zhuanlan.zhihu.com/p/34391770
 
+
+
+
+
+ 双向证书验证和单向证书验证

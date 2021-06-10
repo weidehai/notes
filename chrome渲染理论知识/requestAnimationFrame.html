@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+  </head>
+  <body>
+    <div
+      id="app"
+      style="width: 20px; height: 20px; background-color: red;position: absolute;"
+    ></div>
+    <script>
+      const app = document.querySelector("#app");
+      let step = 0;
+      let opacity = 0.2
+      let direct = "R";
+      let lastTime = 0;
+      let firstTime;
+      let frameCount = 0;
+      let time = 0;
+      let index = 1;
+      const colors = ["red", "yellow", "blue"];
+      for (let i = 0; i < 100000; i++) {
+        let p = document.createElement("p");
+        p.innerText = "11111";
+        document.body.appendChild(p);
+      }
+      function frame() {
+        // if (opacity <= 0.2) direct = "R";
+        // if (opacity >= 0.8) direct = "L";
+        if (step == 0) direct = "R";
+        if (step == 100) direct = "L";
+        // app.style.marginLeft = `${direct=='R'?step+=2:step-=2}px`
+        // app.style.transform = `translate(${
+        //   direct == "R" ? (step += 2) : (step -= 2)
+        // }px,0)`;
+        // app.style.opacity = `${
+        //   direct == "R" ? (opacity+=0.1) : (opacity-=0.1)
+        // }`;
+        //app.style.backgroundColor = `${colors[index<2?index:index%3]}`
+        index++;
+        window.requestAnimationFrame(frame);
+        // if(Date.now()-firstTime>=1e3*time){
+        //     time++
+        //     let fps = Math.round(1e3/((Date.now()-firstTime)/frameCount))
+        //     console.log(`${new Date()} 1S内 FPS:${fps}`)
+        // }
+        // if(!firstTime) firstTime = Date.now()
+        // frameCount++
+      }
+      function sleep(t) {
+        let start = Date.now();
+        while (Date.now() - start < t) {}
+      }
+      window.requestAnimationFrame(frame);
+    </script>
+  </body>
+</html>
