@@ -39,8 +39,10 @@ docker cp 容器名:要拷贝的文件在容器里面的路径 要拷贝到宿�
 从宿主机拷文件到容器里面
 docker cp 要拷贝的文件路径 容器名:要拷贝到容器里面对应的路径
 
-
 查看操作系统的版本（内核版本）
 cat /proc/version
 查看操作系统的发行版本
 cat /etc/issue
+
+查看容器的环境变量
+docker exec {containerId}  env
