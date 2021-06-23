@@ -135,3 +135,14 @@ $color: red;
 #### &符号
 
 就像在选择器中使用时一样，&在SassScript中引用当前父选择器
+
+
+
+# @mixin和@include
+
+@mixin定义一个函数
+
+@include调用或者函数，如果没有参数可以不加圆括号调用
+
+
+

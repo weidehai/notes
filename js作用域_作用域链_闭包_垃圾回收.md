@@ -130,3 +130,15 @@ TODO: bind，call，apply会不会造成内存泄漏
 bind是会造成内存泄漏的
 xxxxx.bind(dom);  //即使dom被删除，但是不会被回收
 xxxxx.call(dom) xxxxx.apply(dom) //不会造成内存泄漏
+
+
+
+
+
+
+
+![image-20210623103441978](https://i.loli.net/2021/06/23/MfdFGsQIqOtBr5S.png)
+
+![image-20210623103512957](https://i.loli.net/2021/06/23/swIyhtFXYb5HUZn.png)
+
+这个例子说明，只要函数一创建（并非执行）就会形成闭包（在引用了祖先作用域属性的情况下）
