@@ -57,3 +57,70 @@ Object.getOwnPropertyDescriptor(a,'name')
 
 [数组](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array)是一种使用**整数作为键(integer-key-ed)属性和长度(length)属性**之间关联的常规对象
 
+## typed arrays
+
+**JavaScript typed arrays** are array-like objects that provide a mechanism for reading and writing raw binary data in memory buffers.
+
+类型数组是一个类似数组的对象，提供了一种可以在内存缓冲区中读写原始二进制数据的机制
+
+Each entry in a JavaScript typed array is a raw binary value in one of a number of supported formats, from 8-bit integers to 64-bit floating-point numbers.
+
+类型数组中每一个实体/元素都是一个原始二进制值（必须是js规定的格式中的一种，从8位二进制整数到64位浮点数）
+
+However, typed arrays are not to be confused with normal arrays, as calling Array.isArray() on a typed array returns false. Moreover, not all methods available for normal arrays are supported by typed arrays (e.g. push and pop).
+
+JavaScript typed arrays split the implementation into **buffers** and **views**
+
+js中的类型数组有两种 buffer和view
+
+ArrayBuffer 就是 buffer型的类型数组
+
+A buffer (implemented by the ArrayBuffer object) is an object representing a chunk of data; it has no format to speak of and offers no mechanism for accessing its contents. In order to access the memory contained in a buffer, you need to use a view. A view provides a context — that is, a data type, starting offset, and the number of elements — that turns the data into a typed array.
+
+buffer型的类型数组代表了一个数据的某一块（部分）内容，buffer型类型数组无法访问其内容，如果需要访问内容，就需要使用view型的类型数组
+
+### ArrayBuffer
+
+The [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)at is used to represent a generic, fixed-length binary data buffer. You can't directly manipulate the contents of an `ArrayBuffer`; instead, you create a typed array view or a [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView)sents the buffer in a specific format, and use that to read and write the contents of the buffe
+
+### DataView
+
+The [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView)vel interface that provides a getter/setter API to read and write arbitrary data to the buffer. This is useful when dealing with different types of data, for example. Typed array views are in the native byte-order (see [Endianness](https://developer.mozilla.org/en-US/docs/Glossary/Endianness)) of your platform. With a `DataView` you are able to control the byte-order. It is big-endian by default and can be set to little-endian in the getter/setter methods.
+
+
+
+
+
+```
+let buffer = new ArrayBuffer(16);
+//申请一段16个字节的内存空间
+let int32View = new Int32Array(buffer);
+//规定类型数组的每个实体的类型，这里是32位整数，也就是16*8/32=4，把刚才申请的16个字节的内存分为4部分
+for (let i = 0; i < int32View.length; i++) {
+  int32View[i] = i * 2;
+}
+//This fills out the 4 entries in the array (4 entries at 4 bytes each makes 16 total bytes) with the values 0, 2, 4, and 6.
+let int16View = new Int16Array(buffer);
+int16View[0] = 32;
+console.log('Entry 0 in the 32-bit array is now ' + int32View[0]);
+for (let i = 0; i < int16View.length; i++) {
+  console.log('Entry ' + i + ': ' + int16View[i]);
+}
+for (let i = 0; i < int32View.length; i++) {
+  console.log('Entry ' + i + ': ' + int32View[i]);
+}
+```
+
+In other words, the two arrays are indeed viewed on the same data buffer(共享同一段内存), treating it as different formats.
+
+```
+let buffer = new ArrayBuffer(24);
+
+// ... read the data into the buffer ...
+
+let idView = new Uint32Array(buffer, 0, 1);
+let usernameView = new Uint8Array(buffer, 4, 16);
+let amountDueView = new Float32Array(buffer, 20, 1);
+//先将buffer按照指定数据格式分割，在取offset和length
+```
+
