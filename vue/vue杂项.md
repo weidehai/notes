@@ -34,8 +34,9 @@ function resolveAsset(options, type, id, warnMissing) {
 
 
 
+属性名字必须完全吻合，不会做任何转化在对比
 
-属性名字大小写，横杠是如何转化的
+
 
 
 avoid using JavaScript keyword as property name: "class"
