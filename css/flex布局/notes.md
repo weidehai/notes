@@ -29,3 +29,6 @@ order：定义子项的排列顺序（前后顺序，数值越小越靠前）
 
 
 一、img、input属于行内替换元素。height/width/padding/margin均可用。效果等于块元素。行内非替换元素，例如, height/width/padding top、bottom/margin top、bottom均无效果。只能用padding left、right和margin left、right改变宽度。
+
+![image-20210714000842116](https://i.loli.net/2021/07/14/vcSQZYrTRsgoxmJ.png)
+
